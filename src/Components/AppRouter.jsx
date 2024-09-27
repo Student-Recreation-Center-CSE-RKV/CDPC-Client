@@ -9,6 +9,7 @@ import PlacementAnalytics from './Pages/PlacementAnalytics';
 import Dashboard from './Pages/Dashboard'
 import EventsWorkshops from './Pages/EventsWorkshop';
 import AlumniNetworks from './Pages/AlumniNetworks';
+import Registration from './Pages/Registration';
 const AppRouter = () => {
   return (
     <Router>
@@ -21,7 +22,9 @@ const AppRouter = () => {
           <Route path='placement-preparation' element={<PlacementPreparation/>}/>
           <Route path='placement-analytics' element={<PlacementAnalytics/>}/>
           <Route path='dashboard' element={<Dashboard/>}/>
-          <Route path='events-workshop' element={<EventsWorkshops/>}/>
+          <Route path='events-workshop' element={<EventsWorkshops/>}>
+            <Route path='registration' element={<Registration/>}/>
+          </Route>
           <Route path='alumni-networks' element={<AlumniNetworks/>}/>
         </Route>
       </Routes>

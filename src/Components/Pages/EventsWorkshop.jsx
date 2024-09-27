@@ -5,7 +5,7 @@ import './App.css';
 import {Typography,AppBar,Box,TextField,Card,CardActions,CardContent,CssBaseline,Toolbar,Container,Grid2, CardMedia} from '@mui/material';
 import EventIcon from '@mui/icons-material/Event';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, Outlet,useLocation } from 'react-router-dom';
 //import ButtonGroup from '@mui/material/ButtonGroup';
 //import { makeStyles } from '@mui/styles';
 //import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 
 const cards=[1,2,3,4,5,6,7,8,9]
 const EventsWorkshops=()=>{
+  const location=useLocation();
   const[formData , setFormData]=
   useState({
     name:"",
@@ -53,9 +54,11 @@ const EventsWorkshops=()=>{
               <Typography  align="center" color="textSecondary" component="p">
                   Events and workshop are organized everyweek to gain knowledge from industry experts
               </Typography>
-     
+              {location.pathname === '/events-workshop/registration' && (
+              <Outlet />
+            )}
           <div className="button">
-          <Grid2 container spacing={2} justify="center" style={{marginLeft:"400px" , marginTop:"20px"}}>
+          <Grid2 container spacing={2} justify="center" style={{display:'flex' , marginTop:"20px"}}>
             <Grid2 item>
               <Button variant="contained" color="primary">
                 Upcoming Events
@@ -70,7 +73,7 @@ const EventsWorkshops=()=>{
           </div>
         </Container>
         </div>
-        <Container className="cardGrid" maxwidth="md">
+        <Container className="cardGrid" maxwidth="md" sx={{marginLeft:{xs:'75px',md:'100px'}}}>
           <Grid2 container spacing={4}>
             {cards.map((card)=>(
                             <Grid2 item key={card} md={3}>
@@ -88,11 +91,12 @@ const EventsWorkshops=()=>{
                                 </Typography>
                               </CardContent>
                               <CardActions>
-                                <Link to="/registration">
+                              <Link to="registration" style={{ textDecoration: 'none' }}>
                                 <Button size="small" color="primary">Register now</Button>
-                                </Link>                     
-                                <Button size="small" color="primary">View More</Button>
-                              </CardActions>
+                              </Link>
+                              <Button size="small" color="primary">View More</Button>
+                            </CardActions>
+
             
                             </Card>
                         </Grid2>
@@ -103,9 +107,9 @@ const EventsWorkshops=()=>{
 
         </Container>
       </main>
-       <Container maxWidth="sm">
+       <Container maxWidth='md' >
         <Box sx={{mt:2}}>
-          <Typography variant="h4"  color="primary"  gutterBottom>
+          <Typography variant="h4"  color="primary"  gutterBottom sx={{textAlign:'center'}}>
             Feedback Form
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -123,12 +127,14 @@ const EventsWorkshops=()=>{
                 <TextField fullWidth label="Feedback" name="feedback" multiline rows={4} variant="outlined" value={FormData.feedback} onChange={handleChange} sx={{margin:2}} required />
               </Grid2>
               <Grid2 item xs={12} >
-                <Button variant="contained" color="primary" type="submit" onChange={handleSubmit} sx={{ marginTop:"20px", marginLeft:"150px", paddingLeft:"100px", paddingRight:"100px"}} >
+                <Button variant="contained" color="primary" type="submit" onChange={handleSubmit} sx={{ marginTop:"20px",marginLeft:{xs:'100px',md:'300px'}, paddingLeft:"100px", paddingRight:"100px"}} >
                   Submit
                 </Button>
               </Grid2>
             
           </form>
+          <br/>
+          <br/>
         </Box>
       </Container>
       

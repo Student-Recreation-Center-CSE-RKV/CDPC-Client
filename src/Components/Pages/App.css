@@ -14,8 +14,12 @@
 }
 .cardGrid{
   padding:20px 0;
- 
 }
 .buttons{
     margin-top: 40px;
+}
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
