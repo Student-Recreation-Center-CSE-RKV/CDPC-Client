@@ -18,7 +18,10 @@ const JobCard = ({ job }) => {
             Salary Range: {job.salaryRange}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions style={{
+          alignItems:"center",
+          justifyContent:"center"
+        }}>
           <Button size="small" variant="contained" color="primary">
             Apply
           </Button>
