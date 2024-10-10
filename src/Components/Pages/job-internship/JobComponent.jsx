@@ -12,9 +12,7 @@ const JobList = (props) => {
     <Grid style={{display:"flex" , flexDirection:"row" , marginTop : "50px"
       }} className='job-list' container spacing={2} justifyContent="center">
       {jobs.map((job, index) => (
-        <Grid item key={index} xs={6} sm={4} md={3}>
           <JobCard job={job} />
-        </Grid>
       ))}
     </Grid>
   </div>
