@@ -5,9 +5,9 @@ import JobList from './job-internship/JobComponent';
 
 const JobAndInternships = () => {
   return <div className='job-apply'>
-    <JobList bgColor="whitesmoke" mt="60px" />
-    <JobList bgColor="whitesmoke" heading="OnCampus Internship" />
-    <JobList bgColor="whitesmoke" heading="OffCampus Internship" />
+    <JobList jobType="onCampusJobs" bgColor="whitesmoke" mt="60px" />
+    <JobList jobType="onCampusInternships" bgColor="whitesmoke" heading="OnCampus Internship" />
+    <JobList jobType="offCampusJobs" bgColor="whitesmoke" heading="OffCampus Internship" />
   </div>
 };
 
