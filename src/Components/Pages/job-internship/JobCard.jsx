@@ -1,21 +1,24 @@
+// give a job object and it will give you job card
 import React from 'react';
 import {Card,CardContent,CardActions,Typography,Button,Grid,} from '@mui/material';
+import './jobCard.css'
+
 
 const JobCard = ({ job }) => {
     return (
       <Card variant="outlined" sx={{ margin: 2, maxWidth: 345 }}>
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
-            {job.title}
+            <span className="heading">Title :</span > {job.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {job.description}
+            <span style={{fontWeight: 'bold'}} className="heading">Description :</span >{job.description}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-            Location: {job.location}
+          <span style={{fontWeight: 'bold'}}  className="heading">Location:</span > {job.location}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-            Salary Range: {job.salaryRange}
+          <span style={{fontWeight: 'bold'}} className="heading">Salary Range:</span > {job.salaryRange}
           </Typography>
         </CardContent>
         <CardActions style={{
