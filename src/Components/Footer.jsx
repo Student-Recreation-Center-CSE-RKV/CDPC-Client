@@ -3,10 +3,8 @@ import { Container, Grid, Typography, Link, IconButton } from '@mui/material';
 import { Facebook, Instagram, Twitter, LinkedIn } from '@mui/icons-material';  // Importing the social media icons
 
 const Footer = () => {
-  return <div style={{
-    width:"100vw"
-  }}>
-    <footer style={{ overflow:"hidden", height:"80vh", backgroundColor: 'rgb(20, 50, 110)', padding: '20px 0', color: 'white' }}>
+  return (
+    <footer style={{ backgroundColor: 'rgb(20, 50, 110)', padding: '20px 0', color: 'white' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Column 1 - About */}
@@ -82,7 +80,7 @@ const Footer = () => {
         </Grid>
       </Container>
     </footer>
-  </div>
+  );
 };
 
 export default Footer;
