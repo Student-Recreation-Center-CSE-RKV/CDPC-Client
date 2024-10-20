@@ -25,9 +25,9 @@ const VerticalCarousel = () => {
   return (
     <div style={{ width: '250px', margin: '0 auto' }}>
       <Slider {...settings}>
-        {images.map((img, index) => (
+        {images.map((item, index) => (
           <div key={index}>
-            <img src={img} alt={`Carousel image ${index}`} style={{ width: '100%' }} />
+            <img src={item} alt={`Carousel${index}`} style={{ width: '100%' }} />
           </div>
         ))}
       </Slider>

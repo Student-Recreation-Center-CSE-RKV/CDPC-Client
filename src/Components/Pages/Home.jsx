@@ -5,7 +5,7 @@ import ObjectivesSection from '../ObjectivesSection';
 // import MyTimeline from '../TimeLine';
 import HomeSection from '../HomeSection';
 // import DirectorMessage from '../DirectorMessage';
-import Test from  '../Test'
+// import Test from  '../Test'
 import ContactUs from '../ContactUS';
 const Home = () => {
   return (

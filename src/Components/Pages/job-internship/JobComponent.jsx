@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,CardContent,CardActions,Typography,Button,Grid,} from '@mui/material';
+import {Grid} from '@mui/material';
 import JobCard from './JobCard';
 import jobs from './JobsList';
 

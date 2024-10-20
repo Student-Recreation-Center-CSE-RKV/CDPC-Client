@@ -13,7 +13,7 @@ const Footer = () => {
               Career Development & Placement Cell
             </Typography>
             <Typography variant="body2" color="white">
-              The Campus Development and Placement Cell (CDPC) is dedicated to providing resources and opportunities for students' professional growth.
+              The Career Development and Placement Cell (CDPC) is dedicated to providing resources and opportunities for students' professional growth.
             </Typography>
           </Grid>
 

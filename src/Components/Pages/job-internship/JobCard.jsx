@@ -1,6 +1,6 @@
 // give a job object and it will give you job card
 import React from 'react';
-import {Card,CardContent,CardActions,Typography,Button,Grid,} from '@mui/material';
+import {Card,CardContent,CardActions,Typography,Button} from '@mui/material';
 import './jobCard.css'
 
 
