@@ -11,6 +11,7 @@ import EventsWorkshops from './Pages/EventsWorkshop';
 import AlumniNetworks from './Pages/AlumniNetworks';
 import Registration from './Pages/Registration';
 import CodingPracticePage from './Pages/CodingPracticePage';
+import ResumeBuildingPage from './Pages/ResumeBuildingPage';
 const AppRouter = () => {
   return (
     <Router>
@@ -28,6 +29,7 @@ const AppRouter = () => {
           </Route>
           <Route path='alumni-networks' element={<AlumniNetworks/>}/>
           <Route path='codingpracticepage' element={<CodingPracticePage/>}/>
+          <Route path="resumebuildingpage" element={<ResumeBuildingPage/>}/>
         </Route>
       </Routes>
     </Router>

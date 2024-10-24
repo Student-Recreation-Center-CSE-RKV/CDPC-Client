@@ -92,13 +92,13 @@ const CodingPracticePage = () => {
     >
       <Container maxWidth="md">
         <motion.div variants={itemVariants}>
-          <br /> <br /> <br /><br />
+          <br /> <br /> <br /><br /><br /><br />
           <Typography variant="h4" gutterBottom align="center" component={motion.h4}>
             Improve Your Coding Skills with the Best Resources
           </Typography>
           <Typography variant="body1" gutterBottom align="center">
             Explore a range of platforms to practice coding daily and test your skills with real-time challenges.
-          </Typography> <br />
+          </Typography> <br /><br/>
         </motion.div>
             
         {/* Resources Section */}
