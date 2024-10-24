@@ -10,6 +10,7 @@ import Dashboard from './Pages/Dashboard'
 import EventsWorkshops from './Pages/EventsWorkshop';
 import AlumniNetworks from './Pages/AlumniNetworks';
 import Registration from './Pages/Registration';
+import CodingPracticePage from './Pages/CodingPracticePage';
 const AppRouter = () => {
   return (
     <Router>
@@ -26,6 +27,7 @@ const AppRouter = () => {
             <Route path='registration' element={<Registration/>}/>
           </Route>
           <Route path='alumni-networks' element={<AlumniNetworks/>}/>
+          <Route path='codingpracticepage' element={<CodingPracticePage/>}/>
         </Route>
       </Routes>
     </Router>
