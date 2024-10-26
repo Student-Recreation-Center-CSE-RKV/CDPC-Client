@@ -1,6 +1,8 @@
 import React from "react";
 import { Typography, Container, Grid, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Link } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star'; // Star icon
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import BrushIcon from '@mui/icons-material/Brush';
 
 // Custom styles
 const styles = {
@@ -38,8 +40,19 @@ const styles = {
   },
   card: {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '10px',
+    borderRadius: '20px',
+    padding:'10px',
     transition: 'box-shadow 0.3s ease',
+    '&:hover':{
+        boxShadow:'0 6px 12px rgba(255,192,203,0.2)',
+    },
+    textDecoration:'none',
+    color:'black',
+    backgroundColor:'rgb(255,255,224,0.6)',
+  },
+  icon:{
+    fontSize:'2rem',
+    marginRight:'10px',
   },
   titleStyle: {
     fontFamily: "'Poppins', sans-serif", // Apply a modern font like Poppins
@@ -135,24 +148,34 @@ const ResumeBuildingPage = () => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
+            <Link href="https://www.linkedin.com/resume-builder" target="_blank" rel="noopener" style={{ textDecoration: 'none' }}>
             <Card style={styles.card}>
               <CardContent>
+                <Grid container alignItems="center">
+                <LinkedInIcon style={{ ...styles.icon, color: '#0077b5' }} />
                 <Typography variant="h6">LinkedIn Resume Builder</Typography>
+                </Grid>
                 <Typography>
                   A tool to build and download a professional resume using your LinkedIn profile.
                 </Typography>
               </CardContent>
             </Card>
+            </Link>
           </Grid>
           <Grid item xs={12} sm={6}>
+          <Link href="https://www.canva.com/resumes" target="_blank" rel="noopener" style={{ textDecoration: 'none' }}>
             <Card style={styles.card}>
               <CardContent>
+              <Grid container alignItems="center">
+              <BrushIcon style={{ ...styles.icon, color: '#00c4cc' }} />
                 <Typography variant="h6">Canva</Typography>
+                </Grid>
                 <Typography>
                   Design creative resumes with templates and easy drag-and-drop tools.
                 </Typography>
               </CardContent>
             </Card>
+            </Link>
           </Grid>
         </Grid>
 
