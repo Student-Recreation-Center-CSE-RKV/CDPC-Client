@@ -135,8 +135,6 @@ const EventWorkshop= () => {
                 <Button className="btn btn-primary btn-sm" onClick={() => handleRegisterClick(event)}>
                   Register
                 </Button>
-              
-            
               ) : (
                 <Button className="btn btn-success btn-sm" onClick={() => handleFeedbackClick(event)}>
                   Feedback

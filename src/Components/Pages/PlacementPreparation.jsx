@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -17,9 +18,11 @@ import {
 } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+//import { Navigate } from "react-router-dom";
 // import InfoIcon from "@mui/icons-material/Info";
 
 const PlacementPreparation = () => {
+  const navigate = useNavigate();
   return (
     <>
       {/* Navbar */}
@@ -62,11 +65,14 @@ const PlacementPreparation = () => {
             { title: "Coding Practice", description: "Hone your coding skills with platforms like LeetCode, HackerRank, and more.", icon: <SchoolIcon fontSize="large" color="primary" /> },
             { title: "Interview Preparation", description: "Get ready with mock interviews, common questions, and interview strategies.", icon: <SchoolIcon fontSize="large" color="primary" /> },
             { title: "Resume Building", description: "Learn how to craft a strong resume that stands out to recruiters.", icon: <SchoolIcon fontSize="large" color="primary" /> },
-            { title: "Aptitude", description: "Sharpen your aptitude skills with various test papers and puzzles.", icon: <SchoolIcon fontSize="large" color="primary" /> },
+            { title: "Aptitude", description: "Sharpen your aptitude skills with various test papers and puzzles.", icon: <SchoolIcon fontSize="large" color="primary" />, route:"/aptitude",},
           ].map((resource, index) => (
             <Grow in={true} timeout={(index + 1) * 500} key={index}>
               <Grid item xs={12} sm={6} md={6}>
-                <Card>
+                <Card
+                  onClick={()=>resource.route && navigate(resource.route)}
+                  sx={{cursor: "pointer"}}
+                  >
                   <CardContent>
                     {resource.icon}
                     <Typography variant="h6" gutterBottom>
