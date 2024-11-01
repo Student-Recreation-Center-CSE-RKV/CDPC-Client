@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Typography, Button, Grid, Box, Link, List, ListItem, ListItemText } from "@mui/material";
+import { Container, Typography, Button, Grid, Box, Link, List, ListItem, ListItemText,IconButton } from "@mui/material";
 import { motion } from "framer-motion";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"; 
 
 // Resources array with image and description
 const resources = [
@@ -92,7 +93,7 @@ const CodingPracticePage = () => {
     >
       <Container maxWidth="md">
         <motion.div variants={itemVariants}>
-          <br /> <br /> <br /><br /><br /><br />
+          <br /> <br /> <br /><br /><br />
           <Typography variant="h4" gutterBottom align="center" component={motion.h4}>
             Improve Your Coding Skills with the Best Resources
           </Typography>
@@ -155,9 +156,12 @@ const CodingPracticePage = () => {
           Tips for Best Coding Practices
           </Typography>
            
-          <List style={{ paddingLeft: "20px", listStyleType: "disc"}}>
+          <List style={{ paddingLeft: "20px"}}>
             {codingTips.map((tip, index) => (
               <ListItem key={index} component={motion.div} variants={itemVariants}>
+                <IconButton size="small" style={{color:"#DAA520", marginRight:'10px'}}>
+                  <FiberManualRecordIcon fontSize="small" />
+                </IconButton>
                 <ListItemText primary={tip} />
               </ListItem>
             ))}
