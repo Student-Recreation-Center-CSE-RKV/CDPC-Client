@@ -1,0 +1,9 @@
+.allumini-card{
+    display: flex;
+    flex-direction: row;
+}
+
+.image-container{
+    width: 200px;
+    border-radius: 30%;
+}
