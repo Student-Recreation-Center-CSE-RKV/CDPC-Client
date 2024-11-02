@@ -1,20 +1,41 @@
 import React from 'react';
 import { Container, Typography, Box, Grid, Paper, Link, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 function InterviewPreparationPage() {
+  const sections = [
+    { title: 'Company Preparation', link: 'https://example.com/company-prep' },
+    { title: 'SDE Interview Prep', link: 'https://example.com/sde-prep' },
+    { title: 'Competitive Programming', link: 'https://example.com/competitive-prog' },
+    { title: 'Practice Company Problems', link: 'https://example.com/practice-problems' },
+    { title: 'Aptitude', link: 'https://example.com/aptitude' },
+    { title: 'Interview Experiences', link: 'https://example.com/interview-experiences' },
+    { title: 'Puzzles', link: 'https://example.com/puzzles' },
+    { title: 'Company Recruitment', link: 'https://example.com/company-recruitment' }
+  ];
+
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 5 }}>
         <br /><br /><br />
-        <Typography variant="h3" component="h1" gutterBottom>
-          Interview Preparation Hub
+        <Typography variant="h3" component="h1" 
+          gutterBottom
+          sx={{
+            background: 'linear-gradient(80deg, #00c6ff, #0072ff, #f072ff, #0072ff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 'bold',
+            fontSize: '2 rem',
+          }}>
+        "Unlock Your Potential for Interview Success"
         </Typography>
         <Typography variant="subtitle1">
-          Your Guide to Acing the Interview Process
+          Get ready to nail your next interview...! Our comprehensive preparation guide covers essential tips,
+           common interview questions, and expert advice to help you stand out from the competition.
         </Typography>
       </Box>
 
@@ -83,24 +104,48 @@ function InterviewPreparationPage() {
       </Box>
 
       <Divider sx={{ my: 4 }} />
-
-      {/* Section - System Design */}
       <Box sx={{ mb: 5 }}>
         <Typography variant="h5" gutterBottom>
-          System Design
+          Interview Preparation
         </Typography>
-        <motion.div whileHover={{ scale: 1.05 }} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-          <Paper sx={{ p: 2, backgroundColor: '#e8eaf6', boxShadow: 3 }}>
-            <Typography variant="h6">Key Concepts</Typography>
-            <Link href="https://www.educative.io/courses/grokking-the-system-design-interview" target="_blank">
-              Grokking System Design
-            </Link><br />
-            <Link href="https://www.youtube.com/c/SystemDesignPrimer" target="_blank">
-              System Design Primer
-            </Link>
-          </Paper>
-        </motion.div>
+        <Grid container spacing={3}>
+          {sections.map((section, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Paper
+                  sx={{
+                    p: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#80cbc4',
+                    color: 'white',
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: '#4db6ac'
+                    }
+                  }}
+                  component="a"
+                  href={section.link}
+                  target="_blank"
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                    {section.title}
+                  </Typography>
+                  <ArrowForwardIcon />
+                </Paper>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
+    
+      
+        
+            
+         
 
       <Divider sx={{ my: 4 }} />
 
@@ -111,6 +156,9 @@ function InterviewPreparationPage() {
         </Typography>
         <motion.div whileHover={{ scale: 1.05 }} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <Paper sx={{ p: 2, backgroundColor: '#fffde7', boxShadow: 3 }}>
+          <Link href="https://grow.google/certificates/interview-warmup/" target="_blank">
+              Start Practicing
+            </Link><br />
             <Link href="https://www.pramp.com/" target="_blank">Pramp</Link><br />
             <Link href="https://interviewing.io/" target="_blank">Interviewing.io</Link>
           </Paper>
@@ -146,4 +194,3 @@ function InterviewPreparationPage() {
 }
 
 export default InterviewPreparationPage;
-
