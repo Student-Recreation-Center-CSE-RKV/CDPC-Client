@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box, Grid, Paper, Link, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
+
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -36,6 +37,11 @@ function InterviewPreparationPage() {
         <Typography variant="subtitle1">
           Get ready to nail your next interview...! Our comprehensive preparation guide covers essential tips,
            common interview questions, and expert advice to help you stand out from the competition.
+        <Typography variant="h3" component="h1" gutterBottom>
+          Interview Preparation Hub
+        </Typography>
+        <Typography variant="subtitle1">
+          Your Guide to Acing the Interview Process
         </Typography>
       </Box>
 
@@ -142,11 +148,24 @@ function InterviewPreparationPage() {
         </Grid>
       </Box>
     
-      
-        
-            
-         
 
+      {/* Section - System Design */}
+      <Box sx={{ mb: 5 }}>
+        <Typography variant="h5" gutterBottom>
+          System Design
+        </Typography>
+        <motion.div whileHover={{ scale: 1.05 }} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <Paper sx={{ p: 2, backgroundColor: '#e8eaf6', boxShadow: 3 }}>
+            <Typography variant="h6">Key Concepts</Typography>
+            <Link href="https://www.educative.io/courses/grokking-the-system-design-interview" target="_blank">
+              Grokking System Design
+            </Link><br />
+            <Link href="https://www.youtube.com/c/SystemDesignPrimer" target="_blank">
+              System Design Primer
+            </Link>
+          </Paper>
+        </motion.div>
+      </Box>
       <Divider sx={{ my: 4 }} />
 
       {/* Section - Mock Interviews */}
@@ -194,3 +213,4 @@ function InterviewPreparationPage() {
 }
 
 export default InterviewPreparationPage;
+
