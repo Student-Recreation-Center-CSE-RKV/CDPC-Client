@@ -28,7 +28,7 @@ const AlumniCard = ({ alum }) => {
                 <div className="alumni-info">
                     <h3>{alum.name}</h3>
                     <p className="company">{alum.company}</p>
-                    <p className="salary">Salary: ${alum.salary}</p>
+                    <p className="salary">${alum.salary}</p>
                 </div>
                 <button onClick={goToProfile} className="view-profile-button">
                     View Profile

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AlumniRegistrationForm.css';
 
 function AlumniRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -27,13 +28,12 @@ function AlumniRegistrationForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
+    <form onSubmit={handleSubmit} className="alumni-registration-form">
       <h2>Alumni Registration</h2>
 
       <label>Name:</label>
       <input
         type="text"
-        style={{border:"1px solid black"}}
         name="name"
         value={formData.name}
         onChange={handleChange}
@@ -43,7 +43,6 @@ function AlumniRegistrationForm() {
       <label>Graduation Year:</label>
       <input
         type="number"
-        style={{border:"1px solid black"}}
         name="graduationYear"
         value={formData.graduationYear}
         onChange={handleChange}
@@ -55,7 +54,6 @@ function AlumniRegistrationForm() {
       <label>Department:</label>
       <input
         type="text"
-        style={{border:"1px solid black"}}
         name="department"
         value={formData.department}
         onChange={handleChange}
@@ -65,7 +63,6 @@ function AlumniRegistrationForm() {
       <label>Current Position:</label>
       <input
         type="text"
-        style={{border:"1px solid black"}}
         name="currentPosition"
         value={formData.currentPosition}
         onChange={handleChange}
@@ -76,7 +73,6 @@ function AlumniRegistrationForm() {
       <input
         type="text"
         name="company"
-        style={{border:"1px solid black"}}
         value={formData.company}
         onChange={handleChange}
         required
@@ -86,8 +82,6 @@ function AlumniRegistrationForm() {
       <input
         type="email"
         name="email"
-        style={{border:"1px solid black"}}
-
         value={formData.email}
         onChange={handleChange}
         required
@@ -97,8 +91,6 @@ function AlumniRegistrationForm() {
       <input
         type="url"
         name="linkedIn"
-        style={{border:"1px solid black"}}
-
         value={formData.linkedIn}
         onChange={handleChange}
       />
@@ -107,27 +99,13 @@ function AlumniRegistrationForm() {
       <textarea
         name="testimonial"
         value={formData.testimonial}
-        style={{border:"1px solid black"}}
-
         onChange={handleChange}
         placeholder="Share your experience with CDPC..."
       />
 
-      <button type="submit">Register</button>
+      <button type="submit" className="register-button">Register</button>
     </form>
   );
 }
-
-const styles = {
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '400px',
-    margin: '0 auto',
-    padding: '1rem',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-  }
-};
 
 export default AlumniRegistrationForm;
