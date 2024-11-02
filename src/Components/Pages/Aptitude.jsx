@@ -7,6 +7,7 @@ function Aptitude() {
   const [category, setCategory] = useState("All");
   const [resources, setResources] = useState([]);
   const [companyPapers, setCompanyPapers] = useState([]);
+  const [showMore, setShowMore] = useState(false); // State for showing more papers
 
   // Mock API call to fetch resources and company-specific papers
   useEffect(() => {
@@ -55,28 +56,28 @@ function Aptitude() {
         {
           company: "Google Aptitude Paper",
           link: "https://www.example.com/google-placement-paper",
-          description: "Google's aptitude questions for placement"
+          description: "Google's aptitude questions for placement",
         },
         {
           company: "Microsoft Aptitude Paper",
           link: "https://www.example.com/microsoft-placement-paper",
-          description: "Microsoft aptitude questions for placement"
+          description: "Microsoft aptitude questions for placement",
         },
         {
           company: "Amazon Aptitude Paper",
           link: "https://www.example.com/amazon-placement-paper",
-          description: "Amazon's aptitude questions for placements."
+          description: "Amazon's aptitude questions for placements.",
         },
         {
           company: "TCS Aptitude Paper",
           link: "https://www.example.com/tcs-placement-paper",
-          description: "TCS  aptitude questions for placements."
+          description: "TCS aptitude questions for placements.",
         },
         {
-          company: "Infoys Aptitude Paper",
+          company: "Infosys Aptitude Paper",
           link: "https://www.example.com/infosys-placement-paper",
-          description: "Infosys Aptitude questions for placements."
-        }
+          description: "Infosys Aptitude questions for placements.",
+        },
       ];
       setCompanyPapers(apiCompanyPapers);
     }
@@ -93,10 +94,12 @@ function Aptitude() {
     );
   });
 
+  // Show only the first few papers unless "Show More" is clicked
+  const papersToShow = showMore ? companyPapers : companyPapers.slice(0, 3); // Show first 3 papers by default
+
   return (
     <div className="App">
       <header className="App-header">
-        <br />
         <h1>Aptitude, Reasoning, and Verbal Ability Preparation</h1>
 
         {/* Search Bar */}
@@ -150,12 +153,12 @@ function Aptitude() {
           ))}
         </div>
 
-<br/>
-        {/* Company-Specific Placement Question Papers in Long Containers */}
+        <br />
+        {/* Company-Specific Placement Question Papers */}
         <div className="company-papers">
           <h2>Company Wise Aptitude Question Papers</h2>
-          <br/>
-          {companyPapers.map((paper, index) => (
+          <br />
+          {papersToShow.map((paper, index) => (
             <div key={index} className="paper-container">
               <h3>{paper.company}</h3>
               <p>{paper.description}</p>
@@ -169,6 +172,20 @@ function Aptitude() {
               </a>
             </div>
           ))}
+
+          {/* Show More Button */}
+          {!showMore && (
+            <button onClick={() => setShowMore(true)} className="show-more-btn">
+              Show More >>
+            </button>
+          )}
+
+          {/* Show Less Button */}
+          {showMore && (
+            <button onClick={() => setShowMore(false)} className="show-more-btn">
+              Show Less >>
+            </button>
+          )}
         </div>
 
         {/* Take a Test */}

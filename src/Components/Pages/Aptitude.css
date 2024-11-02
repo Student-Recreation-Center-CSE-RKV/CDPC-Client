@@ -308,3 +308,22 @@
       max-width: 200px;
     }
   }
+
+  
+.show-more-btn {
+ /* Bootstrap primary color */
+    color:blue; /* Text color */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* No border */
+    border-radius:2px;
+}
+
+
+
+
+
+
+
+
+
+
