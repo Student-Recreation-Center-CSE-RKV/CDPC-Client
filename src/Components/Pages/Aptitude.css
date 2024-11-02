@@ -1,0 +1,329 @@
+.company-papers {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .paper-container {
+    background: linear-gradient(135deg, #f1f1f1, silver); /* Light gradient background */
+    border: 2px solid transparent; /* Default transparent border */
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 15px; /* Rounded corners for modern look */
+    width: 60%;
+    max-width: 700px;
+    min-width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transitions */
+    animation: fadeInUp 0.5s ease-in-out; /* Animation on load */
+  }
+  
+  /* Colorful hover effect */
+  .paper-container:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+    background: linear-gradient(135deg, #ffefba, #ffffff); /* Light yellow on hover */
+    border-color: #ff8c00; /* Add border color on hover */
+  }
+  
+  .paper-container h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333; /* Darker text color for readability */
+  }
+  
+  .paper-container p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .paper-link, .youtube-link {
+    text-decoration: none;
+    color: #007bff; /* Default link color */
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    transition: color 0.3s ease; /* Smooth link color transition */
+  }
+  
+  .paper-link:hover, .youtube-link:hover {
+    color: #ff4500; /* Change link color on hover */
+  }
+  
+  .take-test {
+    margin-top: 30px;
+  }
+  
+  .test-link {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth background transition */
+  }
+  
+  .test-link:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Keyframes for fade-in animation */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px); /* Start from below */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* Move into place */
+    }
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .paper-container {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .paper-container {
+      width: 95%;
+    }
+  }
+  
+  
+
+  
+  /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa; /* Light background */
+    color: #333; /* Default text color */
+  }
+  
+  .App {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .App-header {
+    min-height: 100vh;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #3a3a3a; /* Dark grey */
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  .search-bar {
+    padding: 12px;
+    margin-bottom: 20px;
+    width: 300px;
+    border-radius: 30px;
+    border: 2px solid #ddd;
+    transition: 0.3s ease;
+  }
+  
+  .search-bar:focus {
+    border-color: #61dafb;
+    box-shadow: 0px 0px 10px rgba(97, 218, 251, 0.5);
+  }
+  
+  .category-filter {
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  .category-filter label {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #4a4a4a; /* Dark grey */
+  }
+  
+  .category-filter select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    transition: 0.3s ease;
+  }
+  
+  .category-filter select:focus {
+    border-color: #61dafb;
+    box-shadow: 0px 0px 10px rgba(97, 218, 251, 0.5);
+  }
+  
+  /* Resource Cards */
+  .resources {
+    margin-top: 30px;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* Card background with colors */
+  .resource-card {
+    display: inline-block;
+    background-color:#f1f1f1; /* Soft pastel yellow */
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    width: 250px;
+    height:200px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05); /* Light shadow */
+    text-align: left;
+    vertical-align: top;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .resource-card:nth-child(2n) {
+    background-color:lightcyan; /* Light pastel green */
+  }
+  
+  .resource-card:nth-child(3n) {
+    background-color:antiquewhite; /* Light pastel peach */
+  }
+  
+  .resource-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resource-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #5a5a5a; /* Dark grey for headings */
+  }
+  
+  .resource-card p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #666666; /* Medium grey for text */
+  }
+  
+  .resource-card a {
+    color:blue;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  
+  .resource-card a:hover {
+    text-decoration: underline;
+  }
+  
+  .youtube-link {
+    color: #ff0000;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .resources {
+      display: block;
+    }
+  
+    .search-bar {
+      width: 100%;
+      max-width: 400px;
+    }
+  
+    .resource-card {
+      width: 100%;
+      max-width: 350px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .search-bar {
+      width: 100%;
+      max-width: 320px;
+    }
+  
+    .resource-card {
+      width: 100%;
+      max-width: 280px;
+    }
+  
+    .category-filter label {
+      font-size: 1rem;
+    }
+  
+    .category-filter select {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
+  
+.show-more-btn {
+ /* Bootstrap primary color */
+    color:blue; /* Text color */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* No border */
+    border-radius:2px;
+}
+
+
+
+
+
+
+
+
+
+

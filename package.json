@@ -25,6 +25,7 @@
     "react-vertical-timeline-component": "^3.6.0",
     "recharts": "^2.13.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
