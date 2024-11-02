@@ -62,7 +62,7 @@ const PlacementPreparation = () => {
           {/* Animating cards with Grow */}
           {[
             { title: "Coding Practice", description: "Hone your coding skills with platforms like LeetCode, HackerRank, and more.", icon: <SchoolIcon fontSize="large" color="primary" /> ,route:"/codingpracticepage", },
-            { title: "Interview Preparation", description: "Get ready with mock interviews, common questions, and interview strategies.", icon: <SchoolIcon fontSize="large" color="primary" /> },
+            { title: "Interview Preparation", description: "Get ready with mock interviews, common questions, and interview strategies.", icon: <SchoolIcon fontSize="large" color="primary" /> , route:"/interviewpreparation" ,},
             { title: "Resume Building", description: "Learn how to craft a strong resume that stands out to recruiters.", icon: <SchoolIcon fontSize="large" color="primary" />  , route:"/resumebuildingpage",},
             { title: "Aptitude", description: "Sharpen your aptitude skills with various test papers and puzzles.", icon: <SchoolIcon fontSize="large" color="primary" /> , route:"/aptitude",},
           ].map((resource, index) => (
