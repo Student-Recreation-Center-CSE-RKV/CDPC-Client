@@ -158,19 +158,24 @@ const EventWorkshop= () => {
       <p className="text-center mb-5">
         Discover our exciting events and workshops! From tech conferences to creative workshops, we offer a range of experiences to inspire and engage participants. Browse through our upcoming and past events below.
       </p>
-
       <div className="d-flex justify-content-center mb-4">
-        <Button className={`btn btn-outline-primary mx-2 ${showLatest ? 'active' : ''}`} onClick={handleShowLatest}>
-          Latest Events
+          <Button className={`mx-2 ${showLatest ? 'bg-primary text-white' : 'bg-white text-primary border-primary'}`}onClick={handleShowLatest}
+            >
+            Latest Events
         </Button>
-        <Button className={`btn btn-outline-secondary mx-2 ${!showLatest ? 'active' : ''}`} onClick={handleShowPast}>
-          Past Events
-        </Button>
-      </div>
+        <Button className={`mx-2 ${!showLatest ? 'bg-primary text-white' : 'bg-white text-primary border-primary'}`}onClick={handleShowPast}
+          >
+            Past Events
+          </Button>
+        </div>
+
+     
 
       <div className="row">
         {showLatest ? renderEvents(latestEventsData, true) : renderEvents(pastEventsData, false)}
       </div>
+          
+
 
       <div className="event-footer text-center p-4">
         <h5>Stay Updated on Upcoming Events</h5>

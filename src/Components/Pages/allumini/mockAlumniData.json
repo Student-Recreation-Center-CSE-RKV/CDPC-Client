@@ -1,72 +1,90 @@
 [
     {
         "id": 1,
-        "name": "Alice Johnson",
+        "name": "Shaik Azad",
         "graduationYear": 2018,
         "company": "Google",
-        "position": "Software Engineer"
+        "position": "Software Engineer",
+        "salary": 120000
     },
     {
         "id": 2,
         "name": "Bob Smith",
         "graduationYear": 2017,
         "company": "Microsoft",
-        "position": "Data Scientist"
+        "position": "Data Scientist",
+        "salary": 115000
     },
     {
         "id": 3,
         "name": "Charlie Brown",
         "graduationYear": 2019,
         "company": "Amazon",
-        "position": "Product Manager"
+        "position": "Product Manager",
+        "salary": 110000
     },
     {
         "id": 4,
         "name": "Diana Prince",
         "graduationYear": 2020,
-        "company": "Facebook",
-        "position": "UI/UX Designer"
+        "company": "Meta",
+        "position": "UI/UX Designer",
+        "salary": 105000
     },
     {
         "id": 5,
         "name": "Edward Norton",
         "graduationYear": 2016,
         "company": "Netflix",
-        "position": "Frontend Developer"
+        "position": "Frontend Developer",
+        "salary": 98000
     },
     {
         "id": 6,
         "name": "Fiona Gallagher",
         "graduationYear": 2021,
         "company": "Apple",
-        "position": "iOS Developer"
+        "position": "iOS Developer",
+        "salary": 108000
     },
     {
         "id": 7,
         "name": "George Williams",
         "graduationYear": 2018,
         "company": "Tesla",
-        "position": "Embedded Systems Engineer"
+        "position": "Embedded Systems Engineer",
+        "salary": 112000
     },
     {
         "id": 8,
         "name": "Hannah Davis",
         "graduationYear": 2019,
         "company": "Uber",
-        "position": "Full Stack Developer"
+        "position": "Full Stack Developer",
+        "salary": 95000
     },
     {
         "id": 9,
         "name": "Ian McGregor",
         "graduationYear": 2020,
         "company": "Salesforce",
-        "position": "Cloud Architect"
+        "position": "Cloud Architect",
+        "salary": 125000
     },
     {
         "id": 10,
         "name": "Jessica Lee",
         "graduationYear": 2017,
         "company": "Adobe",
-        "position": "Data Analyst"
+        "position": "Data Analyst",
+        "salary": 85000
+    },
+    {
+        "id": 11,
+        "name": "C V Charan",
+        "graduationYear": 2026,
+        "company": "Google",
+        "position": "Data Analyst",
+        "salary": 90000
     }
 ]

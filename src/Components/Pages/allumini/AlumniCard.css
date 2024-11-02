@@ -1,0 +1,99 @@
+.alumni-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin: 1rem 0;
+    transition: box-shadow 0.3s, max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 120px;
+}
+
+.alumni-card.expanded {
+    max-height: 300px; /* Adjust as needed for expanded content */
+}
+
+.card-main-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.alumni-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+}
+
+.alumni-info {
+    flex: 1;
+}
+
+.alumni-info h3 {
+    font-size: 1.1rem;
+    color: #1e3a8a;
+    font-weight: 600;
+    margin: 0;
+}
+
+.company {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin: 0;
+}
+
+.view-profile-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.view-profile-button:hover {
+    background-color: #1e40af;
+}
+
+.alumni-details {
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 1rem;
+}
+
+.alumni-details p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin: 0.3rem 0;
+}
+
+@media (max-width: 768px) {
+    .alumni-card {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .card-main-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .alumni-photo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .alumni-info h3 {
+        font-size: 1rem;
+    }
+
+    .view-profile-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}

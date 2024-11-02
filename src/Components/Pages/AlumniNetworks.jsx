@@ -1,13 +1,12 @@
 // src/components/JobInterview.js
 import AlumniNetwork from './allumini/AlumniNetwork';
-
+import AlumniRegistrationForm from './allumini/AlluminiRegistrationForm';
 import React from 'react';
-import Registration from './Registration';
 const AlumniNetworks = () => {
   return (
     <div>
       <AlumniNetwork />
-      {/* <Registration/> */}
+      <AlumniRegistrationForm />
     </div>
   );
 };
