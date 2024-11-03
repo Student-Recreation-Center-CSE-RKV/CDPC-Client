@@ -75,7 +75,7 @@ const LandingPageImgContainer = () => {
         <Typography variant="h5" component="h4" gutterBottom>
           Welcome to RGUKT RK Valley's
         </Typography>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom sx={{color:"white"}}>
           Career Development and Placement Cell
         </Typography>
         <Typography variant="body1" sx={{fontSize:'17px'}}>
