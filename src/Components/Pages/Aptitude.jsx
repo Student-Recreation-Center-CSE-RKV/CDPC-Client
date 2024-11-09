@@ -100,7 +100,7 @@ function Aptitude() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Aptitude, Reasoning, and Verbal Ability Preparation</h1>
+        <h1><br />Aptitude, Reasoning, and Verbal Ability Preparation</h1>
 
         {/* Search Bar */}
         <input
@@ -176,14 +176,14 @@ function Aptitude() {
           {/* Show More Button */}
           {!showMore && (
             <button onClick={() => setShowMore(true)} className="show-more-btn">
-              Show More >>
+              Show More... 
             </button>
           )}
 
           {/* Show Less Button */}
           {showMore && (
             <button onClick={() => setShowMore(false)} className="show-more-btn">
-              Show Less >>
+              Show Less...
             </button>
           )}
         </div>

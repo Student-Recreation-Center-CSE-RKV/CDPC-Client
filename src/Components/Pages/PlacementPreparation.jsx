@@ -24,17 +24,7 @@ const PlacementPreparation = () => {
   const navigate = useNavigate(); 
   return (
     <>
-      {/* Navbar */}
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Placement Preparation
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-
-      {/* Hero Section */}
+     
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
@@ -42,6 +32,7 @@ const PlacementPreparation = () => {
           textAlign: "center",
         }}
       >
+        <br />
         <Typography variant="h3" gutterBottom>
           Get Ready for Your Dream Job!
         </Typography>
