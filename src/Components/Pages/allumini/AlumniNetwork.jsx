@@ -24,7 +24,7 @@ const AlumniNetwork = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-4xl font-bold mb-4 text-center text-blue-600">Alumni Network</h1>
+            <h1 className="text-4xl font-bold mb-4 text-center text-blue-600" style={{marginTop:"50px"}}>Alumni Network</h1>
 
             {/* Pass handlers to SearchBar */}
             <SearchBar 

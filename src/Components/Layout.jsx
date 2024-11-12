@@ -10,6 +10,7 @@ const Layout = () => {
       <main>
         <Outlet />  {/* Renders the matched child route component */}
       </main>
+      <br/><br/><br/>
       <Footer />
     </div>
   );

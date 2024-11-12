@@ -98,9 +98,10 @@ function Aptitude() {
   const papersToShow = showMore ? companyPapers : companyPapers.slice(0, 3); // Show first 3 papers by default
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1><br />Aptitude, Reasoning, and Verbal Ability Preparation</h1>
+
+    <div className="Aptitude">
+      <header className="Aptitude-header"><br/><br/>
+        <h1>Aptitude, Reasoning, and Verbal Ability Preparation</h1>
 
         {/* Search Bar */}
         <input

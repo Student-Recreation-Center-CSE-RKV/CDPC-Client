@@ -110,13 +110,13 @@
     color: #333; /* Default text color */
   }
   
-  .App {
+  .Aptitude {
     text-align: center;
     padding: 20px;
   }
   
   /* Header */
-  .App-header {
+  .Aptitude-header {
     min-height: 100vh;
     display: block;
     align-items: center;
