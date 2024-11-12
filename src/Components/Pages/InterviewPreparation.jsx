@@ -36,12 +36,8 @@ function InterviewPreparationPage() {
         </Typography>
         <Typography variant="subtitle1">
           Get ready to nail your next interview...! Our comprehensive preparation guide covers essential tips,
-           common interview questions, and expert advice to help you stand out from the competition.</Typography>
-        <Typography variant="h3" component="h1" gutterBottom>
-          Interview Preparation Hub
-        </Typography>
-        <Typography variant="subtitle1">
-          Your Guide to Acing the Interview Process
+           common interview questions, and expert advice to help you stand out from the competition.
+
         </Typography>
       </Box>
 

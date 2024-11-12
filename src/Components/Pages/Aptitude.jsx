@@ -98,6 +98,7 @@ function Aptitude() {
   const papersToShow = showMore ? companyPapers : companyPapers.slice(0, 3); // Show first 3 papers by default
 
   return (
+
     <div className="Aptitude">
       <header className="Aptitude-header"><br/><br/>
         <h1>Aptitude, Reasoning, and Verbal Ability Preparation</h1>
@@ -176,14 +177,14 @@ function Aptitude() {
           {/* Show More Button */}
           {!showMore && (
             <button onClick={() => setShowMore(true)} className="show-more-btn">
-              Show More 
+              Show More... 
             </button>
           )}
 
           {/* Show Less Button */}
           {showMore && (
             <button onClick={() => setShowMore(false)} className="show-more-btn">
-              Show Less 
+              Show Less...
             </button>
           )}
         </div>
