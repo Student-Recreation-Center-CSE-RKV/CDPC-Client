@@ -15,6 +15,8 @@ import ResumeBuildingPage from './Pages/ResumeBuildingPage';
 import InterviewPreparation from './Pages/InterviewPreparation';
 import Aptitude from './Pages/Aptitude';
 import Login from './Pages/Login';
+import AluminiDetails from './Pages/AluminiDetails';
+import StudentDetails from './Pages/StudentDetails';
 const AppRouter = () => {
   return (
     <Router>
@@ -36,6 +38,10 @@ const AppRouter = () => {
           <Route path="interviewpreparation" element={<InterviewPreparation/>}/>
           <Route path="aptitude" element={<Aptitude/>}/>
           <Route path="login" element={<Login/>}/>
+          <Route path="alumini-details" element={<AluminiDetails/>}/>
+          <Route path="student-details" element={<StudentDetails/>}/>
+          
+
         </Route>
       </Routes>
     </Router>

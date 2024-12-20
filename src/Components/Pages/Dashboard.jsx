@@ -12,13 +12,13 @@ const Dashboard = () => {
 
   // User roles array
   const userRoles = [
-    { label: "Student", type: "student", icon: <SchoolIcon fontSize="large" />, color: "blue" },
-    { label: "Alumni", type: "alumni", icon: <BusinessIcon fontSize="large" />, color: "green" },
+    { label: "Student", path: "/student-details", icon: <SchoolIcon fontSize="large" />, color: "blue" },
+    { label: "Alumni", path: "/alumini-details", icon: <BusinessIcon fontSize="large" />, color: "green" },
   ];
 
   // Handle user type selection
-  const handleSelection = (userType) => {
-    navigate(`/edit-profile/${userType}`);
+  const handleSelection = (path) => {
+    navigate(path);
   };
 
   // Animation variants
@@ -70,7 +70,7 @@ const Dashboard = () => {
                 },
               }}
             >
-              <CardActionArea onClick={() => handleSelection(role.type)} aria-label={role.label}>
+              <CardActionArea onClick={() => handleSelection(role.path)} aria-label={role.label}>
                 <CardContent>
                   <Avatar
                     sx={{

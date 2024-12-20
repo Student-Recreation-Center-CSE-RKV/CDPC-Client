@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
