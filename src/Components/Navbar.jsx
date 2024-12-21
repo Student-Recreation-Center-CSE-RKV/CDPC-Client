@@ -16,7 +16,7 @@ import LoginIcon from '@mui/icons-material/Login';
 
 const pages = [
   { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
+  // { name: 'About', path: '/about' },
   { name: 'Job & Internships', path: '/job-internships' },
   { name: 'Placement-Prep', path: '/placement-preparation' },
   { name: 'Placement-Analytics', path: '/placement-analytics' },
