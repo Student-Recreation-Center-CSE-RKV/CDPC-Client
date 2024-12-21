@@ -14,6 +14,7 @@ import CodingPracticePage from './Pages/CodingPracticePage';
 import ResumeBuildingPage from './Pages/ResumeBuildingPage';
 import InterviewPreparation from './Pages/InterviewPreparation';
 import Aptitude from './Pages/Aptitude';
+import Login from './Pages/Login';
 const AppRouter = () => {
   return (
     <Router>
@@ -34,6 +35,7 @@ const AppRouter = () => {
           <Route path="resumebuildingpage" element={<ResumeBuildingPage/>}/>
           <Route path="interviewpreparation" element={<InterviewPreparation/>}/>
           <Route path="aptitude" element={<Aptitude/>}/>
+          <Route path="login" element={<Login/>}/>
         </Route>
       </Routes>
     </Router>

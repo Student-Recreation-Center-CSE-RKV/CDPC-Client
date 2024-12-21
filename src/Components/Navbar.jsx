@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { NavLink } from 'react-router-dom';
+import LoginIcon from '@mui/icons-material/Login';
 
 const pages = [
   { name: 'Home', path: '/' },
@@ -22,7 +23,13 @@ const pages = [
   { name: 'Events', path: '/events-workshop' },
   { name: 'Alumni-Network', path: '/alumni-networks' },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const settings = [
+  { name: 'Profile', path: '/login', icon: <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" sx={{ height: 25, width: 25 }} /> },
+  { name: 'Login', path: '/login', icon: <LoginIcon /> },
+  { name: 'Dashboard', path: '/dashboard', icon: <MenuIcon /> },
+  { name: 'Logout', path: '/logout', icon: <LoginIcon /> },
+];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -31,6 +38,7 @@ function Navbar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -44,14 +52,15 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: 'rgb(9, 44, 95)',zIndex:'1000'}}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'rgb(9, 44, 95)', zIndex: 1000 }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
+          {/* App Logo */}
           <Typography
             variant="h4"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -64,129 +73,79 @@ function Navbar() {
           >
             CDPC
           </Typography>
-          {/* <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}> */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+
+          {/* Mobile Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              aria-label="open navigation menu"
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon sx={{textAlign:'left'}} />
+              <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-              
             >
               {pages.map((page) => (
-               <MenuItem key={page.name} onClick={handleCloseNavMenu} sx={{
-                '&:hover': {
-                  bgcolor: '#bbbbbb', // Change this to your desired hover color
-                  color: 'white', // Change text color on hover if needed
-                }
-              }}>
-               <NavLink 
-                 to={page.path} 
-                 style={({ isActive }) => ({
-                   textDecoration: 'none', 
-                   color: isActive ? '#ffcc00' : 'inherit' // Change color when active
-                 })}
-               >
-                 <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
-               </NavLink>
-             </MenuItem>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <NavLink
+                    to={page.path}
+                    style={({ isActive }) => ({
+                      textDecoration: 'none',
+                      color: isActive ? '#ffcc00' : 'inherit',
+                    })}
+                  >
+                    {page.name}
+                  </NavLink>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* </Box> */}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            RK VALLEY-CDPC
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
+
+          {/* Desktop Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <NavLink to={page.path} key={page.name} style={{ textDecoration: 'none' }}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block', '&:hover': {
-                      bgcolor: 'rgba(255, 255, 255, 0.1)', // Change to desired hover color
-                    },}}
-                >
+                <Button sx={{ color: 'white', '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.1)' } }}>
                   {page.name}
                 </Button>
               </NavLink>
             ))}
           </Box>
-          <Box sx={{flexGrow: { xs: 1, md: 0 } }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu}
-                 sx={{ p: 1, position:{xs: 'relative', md: 'static'},left:{xs:-13} }} 
-                 aria-controls="menu-appbar" aria-haspopup="true">
-                  <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" sx={{ height: 25, width: 25 }} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' , ml:{md:'30px',xs:'20px'}}}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={handleCloseUserMenu}
-                    sx={{
-                      '&:hover': {
-                        bgcolor: '#bbbbbb',
-                        color: '#ffffff',
-                      },
-                    }}
-                  >
-                    <Typography sx={{ textAlign: 'center', p: 1 }}>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
 
+          {/* User Settings */}
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorElUser}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                  <NavLink
+                    to={setting.path}
+                    style={({ isActive }) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      textDecoration: 'none',
+                      color: isActive ? '#ffcc00' : 'inherit',
+                    })}
+                  >
+                    {setting.icon}
+                    <Typography sx={{ ml: 1 }}>{setting.name}</Typography>
+                  </NavLink>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
