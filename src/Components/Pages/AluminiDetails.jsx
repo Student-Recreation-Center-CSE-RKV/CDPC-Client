@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const steps = ["Personal Info", "Work Details", "Social Links & Goals", "Profile Setup"];
 
 const StepContent = ({ activeStep, formData, handleChange }) => {
@@ -253,18 +253,30 @@ const AluminiDetails = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  
+
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      console.log(formData);
+      // Send a POST request with formData to the API
+      const response = await axios.post("http://localhost:8000/api/alumni/register", formData);
+  
+      // Log the response and display success message
+      console.log("Response:", response.data);
       alert("Registration Successful!");
+  
+      // Navigate to the login page after successful registration
       navigate("/login");
     } catch (error) {
+      // Handle errors and display an alert to the user
+      console.error("Error submitting data:", error);
       alert("Error submitting data. Please try again.");
     } finally {
+      // Ensure loading state is cleared regardless of the outcome
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="App">
