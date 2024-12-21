@@ -1,10 +1,12 @@
-import React from "react";
-import { TextField, Button, Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { TextField, Button, Box, Typography, MenuItem } from "@mui/material"
 import { motion } from "framer-motion";
 import {  useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [role, setRole] = useState("");
+  
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -43,6 +45,18 @@ const Login = () => {
           </Box>
           <Box mb={2}>
             <TextField label="Password" variant="outlined" fullWidth type="password" />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              select
+              label="Select Role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              fullWidth
+            >
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="alumni">Alumni</MenuItem>
+            </TextField>
           </Box>
           <Button type="submit" variant="contained" fullWidth   onClick={() => navigate("/")}>
             Login
