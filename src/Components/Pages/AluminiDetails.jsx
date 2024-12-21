@@ -13,18 +13,10 @@ import {
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const steps = ["Personal Info", "Academic Details", "Contact Info", "Profile Setup"];
+const steps = ["Personal Info", "Work Details", "Social Links & Goals", "Profile Setup"];
 
-const branches = [
-  "Computer Science Engineering",
-  "Electronics and Communication Engineering",
-  "Electrical and Electronics Engineering",
-  "Civil Engineering",
-  "Mechanical Engineering",
-  "Chemical Engineering",
-];
-
-const years = ["P1", "P2", "E1", "E2", "E3", "E4"];
+const branches = ["Computer Science Engineering", "Electronics and Communication Engineering", "Electrical and Electronics Engineering", "Civil Engineering", "Mechanical Engineering", "Chemical Engineering"];
+const batches = ["2008", "2009", "2010", "2011", "2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"];
 
 const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, avatarPreview, errors }) => {
   switch (activeStep) {
@@ -39,7 +31,7 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
-            helperText={errors.name && "Name is required."}
+            helperText={errors.name && " Name is required."}
             error={Boolean(errors.name)}
           />
           <TextField
@@ -63,22 +55,25 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
-            helperText="Password must be at least 8 characters."
+            helperText="Password must be at least 8 characters."    
+          
           />
           <TextField
-            label="Phone"
-            name="phone"
-            value={formData.phone}
+            select
+            label="Batch"
+            name="batch"
+            value={formData.batch}
             onChange={handleChange}
             fullWidth
             margin="dense"
             size="small"
-          />
-        </motion.div>
-      );
-    case 1:
-      return (
-        <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
+          >
+            {batches.map((batch) => (
+              <MenuItem key={batch} value={batch}>
+                {batch}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             label="RGUKT ID NO."
             name="id"
@@ -87,23 +82,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            
           />
-          <TextField
-            select
-            label="Year"
-            name="year"
-            value={formData.year}
-            onChange={handleChange}
-            fullWidth
-            margin="dense"
-            size="small"
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
           <TextField
             select
             label="Branch"
@@ -120,29 +100,63 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
               </MenuItem>
             ))}
           </TextField>
+          <TextField
+            label="Phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+        </motion.div>
+      );
+    case 1:
+      return (
+        <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
+          <TextField
+            label="Company Name"
+            name="companyName"
+            value={formData.companyName}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+            helperText={errors.companyName && "Company Name is required."}
+            error={Boolean(errors.companyName)}
+          />
+          <TextField
+            label="Designation"
+            name="designation"
+            value={formData.designation}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Working Location"
+            name="workingLocation"
+            value={formData.workingLocation}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Experience (Years)"
+            name="experience"
+            value={formData.experience}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
         </motion.div>
       );
     case 2:
       return (
         <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }}>
-          <TextField
-            label="Skills"
-            name="skills"
-            value={formData.skills}
-            onChange={handleChange}
-            fullWidth
-            margin="dense"
-            size="small"
-          />
-          <TextField
-            label="Description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            fullWidth
-            margin="dense"
-            size="small"
-          />
           <TextField
             label="GitHub"
             name="github"
@@ -160,11 +174,41 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.linkedin && "LinkedIn profile is required."}
+            error={Boolean(errors.linkedin)}
           />
           <TextField
             label="Portfolio"
             name="portfolio"
             value={formData.portfolio}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Facebook"
+            name="facebook"
+            value={formData.facebook}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Career Goals"
+            helperText="Describe your aspirations briefly."
+            name="careerGoals"
+            value={formData.careerGoals}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Achievements"
+            name="achievements"
+            value={formData.achievements}
             onChange={handleChange}
             fullWidth
             margin="dense"
@@ -190,6 +234,15 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             size="small"
             InputLabelProps={{ shrink: true }}
           />
+          <TextField
+            label="Skills"
+            name="skills"
+            value={formData.skills}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
         </motion.div>
       );
     default:
@@ -197,7 +250,7 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
   }
 };
 
-const StudentRegistration = () => {
+const AluminiDetails = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -207,15 +260,18 @@ const StudentRegistration = () => {
     batch: "",
     branch: "",
     phone: "",
-    id: "",
-    address: "",
     avatar: "",
-    year: "",
-    linkedin: "",
+    companyName: "",
+    designation: "",
+    workingLocation: "",
+    experience: "",
     github: "",
+    linkedin: "",
     portfolio: "",
-    description: "",
-    skills:"",
+    facebook: "",
+    careerGoals: "",
+    achievements: "",
+    skills: "",
   });
   const [avatarPreview, setAvatarPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -231,6 +287,10 @@ const StudentRegistration = () => {
     if (activeStep === 0) {
       if (!formData.name) newErrors.name = true;
       if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
+    } else if (activeStep === 1) {
+      if (!formData.companyName) newErrors.companyName = true;
+    } else if (activeStep === 2) {
+      if (!formData.linkedin) newErrors.linkedin = true;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -279,7 +339,7 @@ const StudentRegistration = () => {
     <div className="App">
       <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
         <br /><br /><br />
-        <h1>Student Registration Details</h1>
+        <h1>Alumni Registration Details</h1>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
@@ -331,4 +391,4 @@ const StudentRegistration = () => {
   );
 };
 
-export default StudentRegistration;
+export default AluminiDetails;
