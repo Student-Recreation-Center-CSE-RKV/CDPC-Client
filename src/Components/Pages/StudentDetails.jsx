@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button, TextField, CircularProgress, Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+
 
 const steps = ['Personal Info', 'Academic Details', 'Skills & Links', 'Profile Setup'];
 
