@@ -1,55 +1,243 @@
-import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, TextField, CircularProgress, Box } from '@mui/material';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  TextField,
+  CircularProgress,
+  Box,
+  Avatar,
+  MenuItem,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
+const steps = ["Personal Info", "Academic Details", "Contact Info", "Profile Setup"];
 
-const steps = ['Personal Info', 'Academic Details', 'Skills & Links', 'Profile Setup'];
+const branches = [
+  "Computer Science Engineering",
+  "Electronics and Communication Engineering",
+  "Electrical and Electronics Engineering",
+  "Civil Engineering",
+  "Mechanical Engineering",
+  "Chemical Engineering",
+];
 
-const StudentDetails = () => {
+const years = ["P1", "P2", "E1", "E2", "E3", "E4"];
+
+const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, avatarPreview, errors }) => {
+  switch (activeStep) {
+    case 0:
+      return (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <TextField
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+            helperText={errors.name && "Name is required."}
+            error={Boolean(errors.name)}
+          />
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+            helperText={errors.email && "Enter a valid email address."}
+            error={Boolean(errors.email)}
+          />
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+            helperText="Password must be at least 8 characters."
+          />
+          <TextField
+            label="Phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+        </motion.div>
+      );
+    case 1:
+      return (
+        <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
+          <TextField
+            label="RGUKT ID NO."
+            name="id"
+            value={formData.id || "R20xxxxx"}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            select
+            label="Year"
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label="Branch"
+            name="branch"
+            value={formData.branch}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          >
+            {branches.map((branch) => (
+              <MenuItem key={branch} value={branch}>
+                {branch}
+              </MenuItem>
+            ))}
+          </TextField>
+        </motion.div>
+      );
+    case 2:
+      return (
+        <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }}>
+          <TextField
+            label="Skills"
+            name="skills"
+            value={formData.skills}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="GitHub"
+            name="github"
+            value={formData.github}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="LinkedIn"
+            name="linkedin"
+            value={formData.linkedin}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+          <TextField
+            label="Portfolio"
+            name="portfolio"
+            value={formData.portfolio}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+            size="small"
+          />
+        </motion.div>
+      );
+    case 3:
+      return (
+        <motion.div initial={{ y: 50 }} animate={{ y: 0 }}>
+          <Avatar
+            src={avatarPreview || "https://via.placeholder.com/150"}
+            sx={{ width: 100, height: 100, margin: "auto", marginBottom: 2 }}
+          />
+          <TextField
+            label="Avatar (Upload)"
+            helperText="Upload your profile picture."
+            name="avatar"
+            type="file"
+            onChange={handleAvatarChange}
+            fullWidth
+            margin="dense"
+            size="small"
+            InputLabelProps={{ shrink: true }}
+          />
+        </motion.div>
+      );
+    default:
+      return <CircularProgress />;
+  }
+};
+
+const StudentRegistration = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    collegeId: '',
-    year: '',
-    branch: '',
-    phone: '',
-    skills: '',
-    description: '',
-    github: '',
-    linkedin: '',
-    portfolio: '',
-    avatar: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
+    batch: "",
+    branch: "",
+    phone: "",
+    id: "",
+    address: "",
+    avatar: "",
+    year: "",
+    linkedin: "",
+    github: "",
+    portfolio: "",
+    description: "",
+    skills:"",
   });
-  const [errors, setErrors] = useState({
-    name: false,
-    email: false,
-  });
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const validateFields = () => {
-    let isValid = true;
-    const newErrors = { name: false, email: false };
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
+  const isStepValid = () => {
+    const newErrors = {};
     if (activeStep === 0) {
-      if (!formData.name.trim()) {
-        newErrors.name = true;
-        isValid = false;
-      }
-      if (!formData.email.trim()) {
-        newErrors.email = true;
-        isValid = false;
-      }
+      if (!formData.name) newErrors.name = true;
+      if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
     }
-
     setErrors(newErrors);
-    return isValid;
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleNext = () => {
-    if (validateFields()) {
+    if (isStepValid()) {
       setActiveStep((prevStep) => prevStep + 1);
     }
   };
@@ -61,169 +249,42 @@ const StudentDetails = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: false }); // Clear error when user types
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
-    alert('Registration Successful!');
-    navigate('/login');
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const StepContent = () => {
-    switch (activeStep) {
-      case 0:
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <TextField
-              label="Name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-              error={errors.name}
-              helperText={errors.name ? 'Name is required' : ''}
-            />
-            <TextField
-              label="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-              error={errors.email}
-              helperText={errors.email ? 'Email is required' : ''}
-            />
-            <TextField
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-          </motion.div>
-        );
-      case 1:
-        return (
-          <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
-            <TextField
-              label="College ID"
-              name="collegeId"
-              value={formData.collegeId}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="Year"
-              name="year"
-              value={formData.year}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="Branch"
-              name="branch"
-              value={formData.branch}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-          </motion.div>
-        );
-      case 2:
-        return (
-          <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }}>
-            <TextField
-              label="Skills"
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="Description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="GitHub"
-              name="github"
-              value={formData.github}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="LinkedIn"
-              name="linkedin"
-              value={formData.linkedin}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="Portfolio"
-              name="portfolio"
-              value={formData.portfolio}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-          </motion.div>
-        );
-      case 3:
-        return (
-          <motion.div initial={{ y: 50 }} animate={{ y: 0 }}>
-            <TextField
-              label="Avatar (URL)"
-              name="avatar"
-              value={formData.avatar}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-          </motion.div>
-        );
-      default:
-        return <CircularProgress />;
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      console.log(formData);
+      alert("Registration Successful!");
+      navigate("/login");
+    } catch (error) {
+      alert("Error submitting data. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="App">
-      <Box sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
-        <h1>Student Registration Form</h1>
-        <Stepper activeStep={activeStep} alternativeLabel>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
+        <br /><br /><br />
+        <h1>Student Registration Details</h1>
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          sx={{ marginBottom: 3, "& .MuiStepLabel-label": { fontSize: "1rem" } }}
+        >
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -238,10 +299,19 @@ const StudentDetails = () => {
                 Submit
               </Button>
             </motion.div>
+          ) : isLoading ? (
+            <CircularProgress />
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <StepContent />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+              <StepContent
+                activeStep={activeStep}
+                formData={formData}
+                handleChange={handleChange}
+                handleAvatarChange={handleAvatarChange}
+                avatarPreview={avatarPreview}
+                errors={errors}
+              />
+              <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
                 <Button disabled={activeStep === 0} onClick={handleBack}>
                   Back
                 </Button>
@@ -250,7 +320,7 @@ const StudentDetails = () => {
                   color="primary"
                   onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
                 >
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
             </motion.div>
@@ -261,4 +331,4 @@ const StudentDetails = () => {
   );
 };
 
-export default StudentDetails;
+export default StudentRegistration;
