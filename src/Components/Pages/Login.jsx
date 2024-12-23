@@ -22,6 +22,7 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
+        marginTop:5
       }}
     >
       <motion.div

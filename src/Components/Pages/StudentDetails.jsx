@@ -81,8 +81,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
         <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
           <TextField
             label="RGUKT ID NO."
-            name="id"
-            value={formData.id || "R20xxxxx"}
+            name="collegeId"
+            value={formData.collegeId }
             onChange={handleChange}
             fullWidth
             margin="dense"
@@ -204,11 +204,11 @@ const StudentRegistration = () => {
     name: "",
     email: "",
     password: "",
-    batch: "",
+    // batch: "",
     branch: "",
     phone: "",
-    id: "",
-    address: "",
+    collegeId: "",
+    // address: "",
     avatar: "",
     year: "",
     linkedin: "",
@@ -251,29 +251,59 @@ const StudentRegistration = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatarPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+const handleAvatarChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setFormData({ ...formData, avatar: file }); // Save file in formData
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatarPreview(reader.result); // Optional: Display preview
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 
   const handleSubmit = async () => {
-    setIsLoading(true);
+    setIsLoading(true); // Start loading
     try {
+      // Log form data for debugging
       console.log(formData);
-      alert("Registration Successful!");
-      navigate("/login");
+  
+      // Send a POST request to the API
+    // Create FormData object
+    const formDataToSend = new FormData();
+
+    // Append all fields from the formData object to FormData
+    for (const [key, value] of Object.entries(formData)) {
+      formDataToSend.append(key, value);
+    }
+
+    // Send FormData to the backend
+    const response = await fetch("http://localhost:8000/api/student/register", {
+      method: "POST",
+      body: formDataToSend, // Use FormData here
+    });
+  
+      // Check for success response
+      if (response.ok) {
+        const data = await response.json(); // Parse response data
+        console.log(data); // Optional: Log the API response
+        alert("Registration Successful!");
+        navigate("/login"); // Redirect to login page
+      } else {
+        const errorData = await response.json(); // Parse error response
+        console.error("Error response:", errorData);
+        alert(`Error: ${errorData.message || "Unable to register"}`);
+      }
     } catch (error) {
+      console.error("Request error:", error); // Log error
       alert("Error submitting data. Please try again.");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // End loading
     }
   };
+  
 
   return (
     <div className="App">
