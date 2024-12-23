@@ -1,17 +1,64 @@
 import React, { useState } from "react";
-import { TextField, Button, Box, Typography, MenuItem } from "@mui/material"
+import { TextField, Button, Box, Typography, MenuItem } from "@mui/material";
 import { motion } from "framer-motion";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    // Add authentication logic here
-    navigate("/student/profile"); // or "/alumni/profile" based on user type
+
+    if (!email || !password || !role) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setIsLoading(true);
+    let errorData;
+    
+    try {
+      // Determine the API endpoint based on the selected role
+      const endpoint =
+        role === "student"
+          ? "http://localhost:8000/api/student/login"
+          : "http://localhost:8000/api/alumni/login";
+
+      // Make the POST request to the API
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Login Successful:", data);
+
+        // Redirect based on the role
+        if (role === "student") {
+          alert("student login successful");
+          navigate("/");
+        } else if (role === "alumni") {
+          alert("alumni login successful");
+          navigate("/");
+        }
+      } else {
+         errorData = await response.json();
+        alert(`Login failed: ${errorData || "Invalid credentials"}`);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert(`Login failed: ${errorData || "Invalid credentials"}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -22,7 +69,6 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
-        marginTop:5
       }}
     >
       <motion.div
@@ -42,10 +88,23 @@ const Login = () => {
         </Typography>
         <form onSubmit={handleLogin}>
           <Box mb={2}>
-            <TextField label="Email" variant="outlined" fullWidth />
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Box>
           <Box mb={2}>
-            <TextField label="Password" variant="outlined" fullWidth type="password" />
+            <TextField
+              label="Password"
+              variant="outlined"
+              fullWidth
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Box>
           <Box mb={2}>
             <TextField
@@ -59,16 +118,20 @@ const Login = () => {
               <MenuItem value="alumni">Alumni</MenuItem>
             </TextField>
           </Box>
-          <Button type="submit" variant="contained" fullWidth   onClick={() => navigate("/")}>
-            Login
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
           <Button
             variant="text"
             fullWidth
             sx={{ mt: 2 }}
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/register")}
           >
-            
             Create an Account
           </Button>
         </form>
