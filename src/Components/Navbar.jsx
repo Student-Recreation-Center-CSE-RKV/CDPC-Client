@@ -41,11 +41,17 @@ function Navbar() {
   const {user,logout}=useAuth();
 
   // console.log(user);
-  const User = {
+  /*const User = {
     name: user.name,
     email: user.email,
     avatar: user.avatar, // Optional
-  };
+  };*/
+  const User = {
+  name: user?.name || "User",
+  email: user?.email || "user@example.com",
+  avatar: user?.avatar || "/static/images/avatar/1.jpg",
+};
+
   console.log(User);
 
   const settings = [
