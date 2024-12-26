@@ -9,11 +9,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { NavLink } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
+import UserSettingsMenu from './UserSettingsMenu';
+// import LogoutIcon from "@mui/icons-material"
 
+import { useAuth } from './AuthContext';
 const pages = [
   { name: 'Home', path: '/' },
   // { name: 'About', path: '/about' },
@@ -24,32 +27,52 @@ const pages = [
   { name: 'Alumni-Network', path: '/alumni-networks' },
 ];
 
-const settings = [
-  { name: 'Profile', path: '/login', icon: <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" sx={{ height: 25, width: 25 }} /> },
-  { name: 'Login', path: '/login', icon: <LoginIcon /> },
-  { name: 'Dashboard', path: '/dashboard', icon: <MenuIcon /> },
-  { name: 'Logout', path: '/logout', icon: <LoginIcon /> },
-];
+// const settings = [
+//   { name: 'Profile', path: '/login', icon: <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" sx={{ height: 25, width: 25 }} /> },
+//   { name: 'Login', path: '/login', icon: <LoginIcon /> },
+//   { name: 'Dashboard', path: '/dashboard', icon: <MenuIcon /> },
+//   { name: 'Logout', path: '/logout', icon: <LoginIcon /> },
+// ];
+
+
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {user,logout}=useAuth();
+
+  // console.log(user);
+  const User = {
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar, // Optional
+  };
+  console.log(User);
+
+  const settings = [
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: (<Avatar
+      alt="User Avatar"
+      src={User.avatar || "/static/images/avatar/1.jpg"} // Use User.avatar if available
+      sx={{ height: 25, width: 25 }}
+    />),
+    },
+    { name: "Login", path: "/login", icon: <LoginIcon /> },
+    { name: "Dashboard", path: "/dashboard", icon: <MenuIcon /> },
+    { name: "Logout", path: "/logout", icon: <LoginIcon /> },
+  ];   
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="fixed" sx={{ backgroundColor: 'rgb(9, 44, 95)', zIndex: 1000 }}>
@@ -117,35 +140,8 @@ function Navbar() {
           </Box>
 
           {/* User Settings */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={anchorElUser}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                  <NavLink
-                    to={setting.path}
-                    style={({ isActive }) => ({
-                      display: 'flex',
-                      alignItems: 'center',
-                      textDecoration: 'none',
-                      color: isActive ? '#ffcc00' : 'inherit',
-                    })}
-                  >
-                    {setting.icon}
-                    <Typography sx={{ ml: 1 }}>{setting.name}</Typography>
-                  </NavLink>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          <UserSettingsMenu settings={settings} user={User}/>
+          
         </Toolbar>
       </Container>
     </AppBar>

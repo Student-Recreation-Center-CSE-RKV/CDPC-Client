@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Box, Typography, MenuItem } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const {login}=useAuth();
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -40,14 +41,14 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login Successful:", data);
-
+        
         // Redirect based on the role
         if (role === "student") {
           alert("student login successful");
-          navigate("/login");
+          navigate("/");
         } else if (role === "alumni") {
           alert("alumni login successful");
-          navigate("/login");
+          navigate("/");
         }
       } else {
          errorData = await response.json();
