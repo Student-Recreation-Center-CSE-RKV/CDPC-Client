@@ -44,10 +44,10 @@ const Login = () => {
         // Redirect based on the role
         if (role === "student") {
           alert("student login successful");
-          navigate("/");
+          navigate("/login");
         } else if (role === "alumni") {
           alert("alumni login successful");
-          navigate("/");
+          navigate("/login");
         }
       } else {
          errorData = await response.json();
@@ -130,7 +130,7 @@ const Login = () => {
             variant="text"
             fullWidth
             sx={{ mt: 2 }}
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/dashboard")}
           >
             Create an Account
           </Button>
