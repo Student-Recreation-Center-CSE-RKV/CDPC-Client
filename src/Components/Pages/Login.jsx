@@ -36,20 +36,21 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log("Login Successful:", data);
+        const Data = await response.json();
+        console.log("Login Successful:", Data);
         
         // Redirect based on the role
         if (role === "student") {
           alert("student login successful");
-          login(data.data.student);
+          login(Data.data.student);
           navigate("/");
         } else if (role === "alumni") {
           alert("alumni login successful");
-          login(data.data.alumni);
+          login(Data.data.alumni);
           navigate("/");
         }
       } else {

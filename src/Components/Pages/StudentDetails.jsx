@@ -216,6 +216,7 @@ const StudentRegistration = () => {
     portfolio: "",
     description: "",
     skills:"",
+    userType:"student",
   });
   const [avatarPreview, setAvatarPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);

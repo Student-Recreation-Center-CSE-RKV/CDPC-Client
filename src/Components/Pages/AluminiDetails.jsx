@@ -272,6 +272,7 @@ const AluminiDetails = () => {
     careerGoals: "",
     achievements: "",
     skills: "",
+    userType:"alumni",
   });
   const [avatarPreview, setAvatarPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
