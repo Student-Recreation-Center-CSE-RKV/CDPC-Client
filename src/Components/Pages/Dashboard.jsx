@@ -38,9 +38,10 @@ const Dashboard = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: "20px",
+        marginTop:{xs:'60px' , md :"20px"}
       }}
     >
-      <Typography variant="h4" mb={4}>
+      <Typography variant="h4" mb={4} sx={{fontSize:{xs:'20px',md:"27px"}}}>
         Select your role to proceed
       </Typography>
 
@@ -63,7 +64,7 @@ const Dashboard = () => {
           >
             <Card
               sx={{
-                maxWidth: 300,
+                maxWidth:{xs:200,md:300},
                 textAlign: "center",
                 transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
@@ -76,8 +77,8 @@ const Dashboard = () => {
                   <Avatar
                     sx={{
                       bgcolor: role.color,
-                      width: 120,
-                      height: 100,
+                      width: {md:120,xs:80},
+                      height: {md:100,xs:60},
                       margin: "0 auto",
                     }}
                   >

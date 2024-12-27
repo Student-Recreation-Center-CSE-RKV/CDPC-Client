@@ -3,12 +3,12 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Typography,
   Button,
   TextField,
   CircularProgress,
   Box,
   Avatar,
-  MenuItem,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const AdminRegistration = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
     designation: "",
@@ -29,91 +29,136 @@ const AdminRegistration = () => {
     confirmPassword: "",
     employeeId: "",
     adminAccessCode: "",
+    userType: "admin",
   });
-  const [avatarPreview, setAvatarPreview] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // console.log(`Updating field: ${name}, New value: ${value}`);
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({ ...formData, avatar: file });
+      setFormData({ ...formData, avatar: file }); // Save file in formData
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarPreview(reader.result);
+        setAvatarPreview(reader.result); // Optional: Display preview
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
+  const validateStep = () => {
+    const stepErrors = {};
+    if (activeStep === 0) {
+      if (!formData.name) stepErrors.name = "Full Name is required.";
+      if (!formData.email) stepErrors.email = "Email is required.";
+      if (!formData.phone) stepErrors.phone = "Phone Number is required.";
+    }
+    if (activeStep === 1) {
+      if (!formData.username) stepErrors.username = "Username is required.";
+      if (!formData.password) stepErrors.password = "Password is required.";
+      if (formData.password !== formData.confirmPassword)
+        stepErrors.confirmPassword = "Passwords do not match.";
+    }
+    if (activeStep === 2) {
+      if (!formData.employeeId) stepErrors.employeeId = "Employee ID is required.";
+      if (!formData.adminAccessCode)
+        stepErrors.adminAccessCode = "Admin Access Code is required.";
+    }
+    setErrors(stepErrors);
+    return Object.keys(stepErrors).length === 0;
   };
 
-  const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
+  const handleNext = () => {
+    if (!validateStep()) return;
+    setActiveStep((prev) => prev + 1);
   };
+
+  const handleBack = () => setActiveStep((prev) => prev - 1);
 
   const handleSubmit = async () => {
+    if (!validateStep()) return;
     setIsLoading(true);
+    console.log(formData);
+    const formDataToSend = new FormData();
+    for (const [key, value] of Object.entries(formData)) {
+      formDataToSend.append(key, value);
+    }
+    
     try {
-      const formDataToSend = new FormData();
-      for (const [key, value] of Object.entries(formData)) {
-        formDataToSend.append(key, value);
-      }
-
       const response = await fetch("http://localhost:8000/api/admin/register", {
         method: "POST",
         body: formDataToSend,
       });
-
-      if (response.ok) {
-        alert("Registration Successful!");
-        navigate("/login");
-      } else {
+      console.log(response);
+      if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message || "Unable to register"}`);
+        throw new Error(errorData.message || "Registration failed.");
       }
+
+      alert("Registration Successful!");
+      navigate("/login");
     } catch (error) {
-      alert("Error submitting data. Please try again.");
+      alert(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const StepContent = () => {
-    switch (activeStep) {
-      case 0:
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-             <Avatar
+  const renderStepContent = () => {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{
+          background: "#f9f9f9",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        {activeStep === 0 && (
+          <>
+            <Typography variant="h6" align="center" gutterBottom>
+              Personal Information
+            </Typography>
+            <Avatar
               src={avatarPreview || "https://via.placeholder.com/150"}
-              sx={{ width: 100, height: 100, margin: "auto", marginBottom: 2 }}
+              sx={{ width: 100, height: 100, margin: "auto", marginBottom: 3 }}
             />
-            <TextField
-              label="Avatar (Upload)"
-              name="avatar"
+            <input
+              accept="image/*"
               type="file"
               onChange={handleAvatarChange}
-              fullWidth
-              margin="dense"
-              size="small"
-              InputLabelProps={{ shrink: true }}
+              style={{
+                display: "block",
+                margin: "10px auto",
+                padding: "8px",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+              }}
             />
+            {errors.avatar && (
+              <Typography color="error" variant="body2">
+                {errors.avatar}
+              </Typography>
+            )}
             <TextField
               label="Full Name"
-              name="fullName"
-              value={formData.fullName}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.name}
+              helperText={errors.name}
+              sx={{ marginBottom: 2 }}
             />
             <TextField
               label="Email"
@@ -122,44 +167,36 @@ const AdminRegistration = () => {
               value={formData.email}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.email}
+              helperText={errors.email}
+              sx={{ marginBottom: 2 }}
             />
             <TextField
-              label="Phone Number"
+              label="Phone"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.phone}
+              helperText={errors.phone}
+              sx={{ marginBottom: 2 }}
             />
-            <TextField
-              label="Designation"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              fullWidth
-              margin="dense"
-              size="small"
-            />
-           
-          </motion.div>
-        );
-      case 1:
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          </>
+        )}
+        {activeStep === 1 && (
+          <>
+            <Typography variant="h6" align="center" gutterBottom>
+              Account Setup
+            </Typography>
             <TextField
               label="Username"
               name="username"
               value={formData.username}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.username}
+              helperText={errors.username}
+              sx={{ marginBottom: 2 }}
             />
             <TextField
               label="Password"
@@ -168,9 +205,9 @@ const AdminRegistration = () => {
               value={formData.password}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.password}
+              helperText={errors.password}
+              sx={{ marginBottom: 2 }}
             />
             <TextField
               label="Confirm Password"
@@ -179,24 +216,26 @@ const AdminRegistration = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword}
+              sx={{ marginBottom: 2 }}
             />
-          </motion.div>
-        );
-      case 2:
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          </>
+        )}
+        {activeStep === 2 && (
+          <>
+            <Typography variant="h6" align="center" gutterBottom>
+              Verification Details
+            </Typography>
             <TextField
               label="Employee ID"
               name="employeeId"
               value={formData.employeeId}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.employeeId}
+              helperText={errors.employeeId}
+              sx={{ marginBottom: 2 }}
             />
             <TextField
               label="Admin Access Code"
@@ -204,20 +243,21 @@ const AdminRegistration = () => {
               value={formData.adminAccessCode}
               onChange={handleChange}
               fullWidth
-              margin="dense"
-              size="small"
-              required
+              error={!!errors.adminAccessCode}
+              helperText={errors.adminAccessCode}
+              sx={{ marginBottom: 2 }}
             />
-          </motion.div>
-        );
-      default:
-        return <CircularProgress />;
-    }
+          </>
+        )}
+      </motion.div>
+    );
   };
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
-      <h1>Admin Registration</h1>
+
+    <>
+    <Box sx={{ maxWidth: 600, margin: "auto", padding: 2,marginTop:"65px" }}>
+      <h1 style={{textAlign:"center"}}>Admin Registration</h1>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -226,38 +266,48 @@ const AdminRegistration = () => {
         ))}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2>All steps completed</h2>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              {isLoading ? <CircularProgress size={24} /> : "Submit"}
-            </Button>
-          </motion.div>
-        ) : (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <StepContent />
-            <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </motion.div>
-        )}
+        {renderStepContent()}
+        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+          <Button disabled={activeStep === 0} onClick={handleBack}>
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              if (activeStep === steps.length - 1) {
+                handleSubmit(); // Call handleSubmit when "Finish" is clicked
+              } else {
+                handleNext(); // Proceed to the next step otherwise
+              }
+            }}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <CircularProgress 
+              size={70} 
+              thickness={3} 
+              color="primary" 
+              sx={{ 
+                color: 'green', // Custom color
+                margin: 'auto', // Centering it within a container
+                padding: 1, // Padding around the spinner
+              }} 
+            />
+            
+            ) : activeStep === steps.length - 1 ? (
+              "Finish"
+            ) : (
+              "Next"
+            )}
+          </Button>
+        </Box>
       </div>
     </Box>
+    
+    </>
   );
+  
 };
 
 export default AdminRegistration;
