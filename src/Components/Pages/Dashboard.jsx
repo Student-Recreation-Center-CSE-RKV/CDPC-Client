@@ -14,6 +14,7 @@ const Dashboard = () => {
   const userRoles = [
     { label: "Student", path: "/student-details", icon: <SchoolIcon fontSize="large" />, color: "blue" },
     { label: "Alumni", path: "/alumini-details", icon: <BusinessIcon fontSize="large" />, color: "green" },
+    { label: "Admin", path: "/admin-details", icon: <BusinessIcon fontSize="large" />, color: "pink" },
   ];
 
   // Handle user type selection
