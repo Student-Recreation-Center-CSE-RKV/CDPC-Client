@@ -133,7 +133,7 @@ const Login = () => {
             variant="text"
             fullWidth
             sx={{ mt: 2 }}
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/dashboard")}
           >
             Create an Account
           </Button>
