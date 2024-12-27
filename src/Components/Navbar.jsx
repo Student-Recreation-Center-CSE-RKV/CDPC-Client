@@ -19,6 +19,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useAuth } from './AuthContext';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const pages = [
@@ -70,8 +72,8 @@ function Navbar() {
       sx={{ height: 25, width: 25 }}
     />),
     },
-    // { name: "Dashboard", path: "/dashboard", icon: <MenuIcon /> },
-    { name: "Logout", path: "/logout", icon: <LoginIcon /> },
+    { name: "Edit", path: "/edit-details", icon: <EditIcon /> },
+    { name: "Logout", path: "/logout", icon: <LogoutIcon /> },
   ];   
   
 
