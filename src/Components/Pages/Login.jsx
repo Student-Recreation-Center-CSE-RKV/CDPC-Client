@@ -45,11 +45,9 @@ const Login = () => {
         // Redirect based on the role
         if (role === "student") {
           alert("student login successful");
-          login(data.data.student);
           navigate("/");
         } else if (role === "alumni") {
           alert("alumni login successful");
-          login(data.data.alumni);
           navigate("/");
         }
       } else {
