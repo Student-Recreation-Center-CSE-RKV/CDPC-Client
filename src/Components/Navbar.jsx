@@ -41,6 +41,7 @@ function Navbar() {
   const {user,logout}=useAuth();
 
   // console.log(user);
+
   /*const User = {
     name: user.name,
     email: user.email,
@@ -146,7 +147,7 @@ function Navbar() {
           </Box>
 
           {/* User Settings */}
-          <UserSettingsMenu settings={settings} user={User}/>
+          <UserSettingsMenu settings={settings} user={User} logout={logout}/>
           
         </Toolbar>
       </Container>

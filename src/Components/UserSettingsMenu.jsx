@@ -1,16 +1,45 @@
 import React, { useState } from "react";
 import { Box, Tooltip, IconButton, Menu, MenuItem, Typography, Avatar, Divider } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const UserSettingsMenu = ({ settings, user }) => {
+const UserSettingsMenu = ({ settings, user,logout }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
-
+  const navigate = useNavigate();
+// console.log(logout);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const logoutUrl =
+        user.userType === "alumni"
+          ? "http://localhost:8000/api/alumni/logout"
+          : "http://localhost:8000/api/student/logout";
+
+      const response = await fetch(logoutUrl, {
+        method: "POST",
+        credentials: "include", // Ensure cookies are sent
+      });
+    //   console.log(response);
+      if (response.ok) {
+        // Clear session storage or cookies if necessary
+        
+        alert("Logout successful");
+        logout();
+        console.log("Logout successful");
+        // Redirect to the login page
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
@@ -51,23 +80,30 @@ const UserSettingsMenu = ({ settings, user }) => {
         <Divider sx={{ my: 1 }} />
 
         {/* Menu Items */}
-        {settings.map((setting) => (
-          <MenuItem key={setting.name}>
-            <NavLink
-              to={setting.path}
-              style={({ isActive }) => ({
-                display: "flex",
-                alignItems: "center",
-                textDecoration: "none",
-                color: isActive ? "#ffcc00" : "inherit",
-                width: "100%",
-              })}
-            >
+        {settings.map((setting) =>
+          setting.name === "Logout" ? (
+            <MenuItem key={setting.name} onClick={handleLogout}>
               {setting.icon}
               <Typography sx={{ ml: 1 }}>{setting.name}</Typography>
-            </NavLink>
-          </MenuItem>
-        ))}
+            </MenuItem>
+          ) : (
+            <MenuItem key={setting.name}>
+              <NavLink
+                to={setting.path}
+                style={({ isActive }) => ({
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "none",
+                  color: isActive ? "#ffcc00" : "inherit",
+                  width: "100%",
+                })}
+              >
+                {setting.icon}
+                <Typography sx={{ ml: 1 }}>{setting.name}</Typography>
+              </NavLink>
+            </MenuItem>
+          )
+        )}
       </Menu>
     </Box>
   );
