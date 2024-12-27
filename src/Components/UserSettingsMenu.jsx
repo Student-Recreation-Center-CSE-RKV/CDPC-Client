@@ -70,12 +70,16 @@ const UserSettingsMenu = ({ settings, user,logout }) => {
             src={user.avatar || "/static/images/avatar/1.jpg"}
             sx={{ width: 56, height: 56, mx: "auto" }}
           />
-          <Typography variant="subtitle1" sx={{ mt: 1 }}>
+            <Typography variant="subtitle1" sx={{ mt: 1 }}>
             {user.name || "John Doe"} {/* Display user's name */}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
             {user.email || "johndoe@example.com"} {/* Display user's email */}
-          </Typography>
+            </Typography><br/>
+            <Typography variant="caption" color="text.secondary">
+            {`Role: ${user.userType || "undefined"}`} {/* Display user's role */}
+            </Typography>
+
         </Box>
         <Divider sx={{ my: 1 }} />
 
