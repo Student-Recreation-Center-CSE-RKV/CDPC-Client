@@ -3,12 +3,12 @@ import {
   Stepper,
   Step,
   StepLabel,
+  MenuItem,
   Button,
   TextField,
   CircularProgress,
   Box,
   Avatar,
-  MenuItem,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ const branches = [
   "Chemical Engineering",
 ];
 
-const years = ["P1", "P2", "E1", "E2", "E3", "E4"];
+const years = ["E1", "E2", "E3", "E4"];
 
 const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, avatarPreview, errors }) => {
   switch (activeStep) {
@@ -82,11 +82,13 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
           <TextField
             label="RGUKT ID NO."
             name="collegeId"
-            value={formData.collegeId }
+            value={formData.collegeId}
             onChange={handleChange}
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.collegeId && "CollegeId is required."}
+            error={Boolean(errors.collegeId)}
           />
           <TextField
             select
@@ -97,6 +99,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.year && "Year is required."}
+            error={Boolean(errors.year)}
           >
             {years.map((year) => (
               <MenuItem key={year} value={year}>
@@ -113,6 +117,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.branch && "Branch is required."}
+            error={Boolean(errors.branch)}
           >
             {branches.map((branch) => (
               <MenuItem key={branch} value={branch}>
@@ -160,6 +166,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.linkedin && "Linkedin  is required."}
+            error={Boolean(errors.linkedin)}
           />
           <TextField
             label="Portfolio"
@@ -204,19 +212,17 @@ const StudentRegistration = () => {
     name: "",
     email: "",
     password: "",
-    // batch: "",
     branch: "",
     phone: "",
     collegeId: "",
-    // address: "",
     avatar: "",
     year: "",
     linkedin: "",
     github: "",
     portfolio: "",
     description: "",
-    skills:"",
-    userType:"student",
+    skills: "",
+    userType: "student",
   });
   const [avatarPreview, setAvatarPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -233,12 +239,21 @@ const StudentRegistration = () => {
       if (!formData.name) newErrors.name = true;
       if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
     }
+    if (activeStep === 1) {
+      if (!formData.collegeId) newErrors.collegeId = true; 
+      if(!formData.year) newErrors.year = true;
+      if(!formData.branch) newErrors.branch = true;
+    }
+    if (activeStep === 2) {
+      if (!formData.linkedin) newErrors.linkedin = true; 
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleNext = () => {
     if (isStepValid()) {
+      setErrors({});
       setActiveStep((prevStep) => prevStep + 1);
     }
   };
@@ -250,67 +265,54 @@ const StudentRegistration = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (errors[name]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
+    }
   };
 
-const handleAvatarChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setFormData({ ...formData, avatar: file }); // Save file in formData
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setAvatarPreview(reader.result); // Optional: Display preview
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, avatar: file });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async () => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
-      // Log form data for debugging
-      console.log(formData);
-  
-      // Send a POST request to the API
-    // Create FormData object
-    const formDataToSend = new FormData();
+      const formDataToSend = new FormData();
+      for (const [key, value] of Object.entries(formData)) {
+        formDataToSend.append(key, value);
+      }
+      const response = await fetch("http://localhost:8000/api/student/register", {
+        method: "POST",
+        body: formDataToSend,
+      });
 
-    // Append all fields from the formData object to FormData
-    for (const [key, value] of Object.entries(formData)) {
-      formDataToSend.append(key, value);
-    }
-
-    // Send FormData to the backend
-    const response = await fetch("http://localhost:8000/api/student/register", {
-      method: "POST",
-      body: formDataToSend, // Use FormData here
-    });
-  
-      // Check for success response
       if (response.ok) {
-        const data = await response.json(); // Parse response data
-        console.log(data); // Optional: Log the API response
+        const data = await response.json();
         alert("Registration Successful!");
-        navigate("/login"); // Redirect to login page
+        navigate("/login");
       } else {
-        const errorData = await response.json(); // Parse error response
-        console.error("Error response:", errorData);
+        const errorData = await response.json();
         alert(`Error: ${errorData.message || "Unable to register"}`);
       }
     } catch (error) {
-      console.error("Request error:", error); // Log error
       alert("Error submitting data. Please try again.");
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false);
     }
   };
-  
 
   return (
     <div className="App">
-      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
-        <br /><br /><br />
-        <h1>Student Registration Details</h1>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 , marginTop:"65px"}}>
+        <h1 style={{textAlign:"center"}}>Student Registration Details</h1>
         <Stepper
           activeStep={activeStep}
           alternativeLabel

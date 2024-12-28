@@ -288,9 +288,11 @@ const AluminiDetails = () => {
     if (activeStep === 0) {
       if (!formData.name) newErrors.name = true;
       if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
-    } else if (activeStep === 1) {
+    }
+    if (activeStep === 1) {
       if (!formData.companyName) newErrors.companyName = true;
-    } else if (activeStep === 2) {
+    } 
+    if (activeStep === 2) {
       if (!formData.linkedin) newErrors.linkedin = true;
     }
     setErrors(newErrors);
@@ -367,9 +369,8 @@ const AluminiDetails = () => {
 
   return (
     <div className="App">
-      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
-        <br /><br /><br />
-        <h1>Alumni Registration Details</h1>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 , marginTop:"65px"}}>
+        <h1 style={{textAlign:"center"}}>Alumni Registration Details</h1>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
