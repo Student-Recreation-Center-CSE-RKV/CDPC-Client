@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Box, Tooltip, IconButton, Menu, MenuItem, Typography, Avatar, Divider } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-
-const UserSettingsMenu = ({ settings, user,logout }) => {
+// import {Link} from "react-router-dom"
+const UserSettingsMenu = ({ settings, user,logout}) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-// console.log(logout);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
