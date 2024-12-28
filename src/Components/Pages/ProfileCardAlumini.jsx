@@ -11,23 +11,29 @@ import {
   useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import ProfileCardStudent from "./ProfileCard";
 
-const ProfileCardStudent = () => {
+const ProfileCardAlumini = () => {
   const [expandedField, setExpandedField] = useState(null);
   const [fieldValues, setFieldValues] = useState({
     name: "",
     email: "",
-    collegeId: "",
-    year: "",
+    batch: "",
     branch: "",
     phone: "",
-    skills: "",
-    description: "",
-    github: "",
+    avatar: null,
+    companyDetails: "",
+    designation: "",
+    workingLocation: "",
+    experience: "",
     linkedin: "",
+    github: "",
+    portfolio: "",
+    facebook: "",
+    careerGoals: "",
+    achievements: "",
+    skills: "",
   });
-  const [profilePhoto, setProfilePhoto] = useState(null); // State to hold the profile photo
+
   const [photoPreview, setPhotoPreview] = useState(null); // State to show photo preview
 
   const handleExpand = (field) => {
@@ -41,7 +47,7 @@ const ProfileCardStudent = () => {
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setProfilePhoto(file);
+      setFieldValues({ ...fieldValues, avatar: file });
       setPhotoPreview(URL.createObjectURL(file)); // Create a preview URL for the uploaded photo
     }
   };
@@ -86,8 +92,8 @@ const ProfileCardStudent = () => {
           alt="Profile Photo"
           src={photoPreview || "https://via.placeholder.com/150"}
           sx={{
-            width: isSmallScreen ? 120 : 200, // Smaller avatar on small screens
-            height: isSmallScreen ? 120 : 200,
+            width: isSmallScreen ? 200 : 250, // Smaller avatar on small screens
+            height: isSmallScreen ? 200 : 250,
             cursor: "pointer",
             "&:hover": {
               opacity: 0.8,
@@ -109,18 +115,24 @@ const ProfileCardStudent = () => {
       </Box>
 
       {/* Fields Section */}
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 5 }}>
         {[
           { label: "Name", field: "name" },
           { label: "Email", field: "email" },
-          { label: "College ID", field: "collegeId" },
-          { label: "Year", field: "year" },
+          { label: "Batch", field: "batch" },
           { label: "Branch", field: "branch" },
           { label: "Phone", field: "phone" },
-          { label: "Skills", field: "skills" },
-          { label: "Description", field: "description" },
-          { label: "GitHub", field: "github" },
+          { label: "Company Details", field: "companyDetails" },
+          { label: "Designation", field: "designation" },
+          { label: "Working Location", field: "workingLocation" },
+          { label: "Experience", field: "experience" },
           { label: "LinkedIn", field: "linkedin" },
+          { label: "GitHub", field: "github" },
+          { label: "Portfolio", field: "portfolio" },
+          { label: "Facebook", field: "facebook" },
+          { label: "Career Goals", field: "careerGoals" },
+          { label: "Achievements", field: "achievements" },
+          { label: "Skills", field: "skills" },
         ].map(({ label, field }) => (
           <Box
             key={field}
@@ -157,8 +169,8 @@ const ProfileCardStudent = () => {
                   onChange={(e) =>
                     setFieldValues({ ...fieldValues, [field]: e.target.value })
                   }
-                  multiline={field === "description"}
-                  rows={field === "description" ? 4 : 1}
+                  multiline={field === "careerGoals" || field === "achievements" || field === "skills"}
+                  rows={field === "careerGoals" || field === "achievements" || field === "skills" ? 4 : 1}
                 />
                 <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
                   <Button
@@ -186,4 +198,4 @@ const ProfileCardStudent = () => {
   );
 };
 
-export default ProfileCardStudent;
+export default ProfileCardAlumini;

@@ -18,7 +18,7 @@ import Login from './Pages/Login';
 import AluminiDetails from './Pages/AluminiDetails';
 import StudentDetails from './Pages/StudentDetails';
 import AdminDetails from './Pages/AdminDetails';
-import ProfileCardStudent from './Pages/ProfileCardStudent';
+import ProfileCard from './Pages/ProfileCard';
 const AppRouter = () => {
   return (
     <Router>
@@ -43,7 +43,7 @@ const AppRouter = () => {
           <Route path="alumini-details" element={<AluminiDetails/>}/>
           <Route path="student-details" element={<StudentDetails/>}/>
           <Route path="admin-details" element={<AdminDetails/>}/>
-          <Route path="profile-card-student" element={<ProfileCardStudent/>}/>
+          <Route path="profile-card" element={<ProfileCard/>}/>
 
         </Route>
       </Routes>
