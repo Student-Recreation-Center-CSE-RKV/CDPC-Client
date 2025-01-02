@@ -24,7 +24,7 @@ const branches = [
   "Chemical Engineering",
 ];
 
-const years = ["P1", "P2", "E1", "E2", "E3", "E4"];
+const years = ["E1", "E2", "E3", "E4"];
 
 const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, avatarPreview, errors }) => {
   switch (activeStep) {
@@ -63,7 +63,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
-            helperText="Password must be at least 8 characters."
+            helperText={errors.password && "Password must be at least 8 characters."}
+            error={Boolean(errors.password)}
           />
           <TextField
             label="Phone"
@@ -87,6 +88,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.collegeId && "CollegeId is required."}
+            error={Boolean(errors.collegeId)}
           />
           <TextField
             select
@@ -97,6 +100,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.year && "Year is required."}
+            error={Boolean(errors.year)}
           >
             {years.map((year) => (
               <MenuItem key={year} value={year}>
@@ -113,6 +118,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.branch && "Branch is required."}
+            error={Boolean(errors.branch)}
           >
             {branches.map((branch) => (
               <MenuItem key={branch} value={branch}>
@@ -160,6 +167,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.linkedin && "Linkedin is required."}
+            error={Boolean(errors.linkedin)}
           />
           <TextField
             label="Portfolio"
@@ -204,11 +213,9 @@ const StudentRegistration = () => {
     name: "",
     email: "",
     password: "",
-    // batch: "",
     branch: "",
     phone: "",
     collegeId: "",
-    // address: "",
     avatar: "",
     year: "",
     linkedin: "",
@@ -232,6 +239,15 @@ const StudentRegistration = () => {
     if (activeStep === 0) {
       if (!formData.name) newErrors.name = true;
       if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
+      if (formData.password.length < 8) newErrors.password = true;
+    }
+    if (activeStep === 1) {
+      if (!formData.collegeId) newErrors.collegeId = true;
+      if (!formData.year) newErrors.year = true;
+      if (!formData.branch) newErrors.branch = true;
+    }
+    if (activeStep === 2){
+      if (!formData.linkedin) newErrors.linkedin = true;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -239,6 +255,7 @@ const StudentRegistration = () => {
 
   const handleNext = () => {
     if (isStepValid()) {
+      setErrors({});
       setActiveStep((prevStep) => prevStep + 1);
     }
   };
@@ -250,6 +267,9 @@ const StudentRegistration = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if(errors[name]){
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: false}));
+    }
   };
 
 const handleAvatarChange = (e) => {
@@ -308,9 +328,8 @@ const handleAvatarChange = (e) => {
 
   return (
     <div className="App">
-      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
-        <br /><br /><br />
-        <h1>Student Registration Details</h1>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 ,marginTop:"65px"}}>
+        <h1 style={{textAlign:"center"}}>Student Registration Details</h1>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
