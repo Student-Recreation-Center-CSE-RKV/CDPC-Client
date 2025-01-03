@@ -6,25 +6,25 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const JobList = (props) => {
-  const { bgColor, jobType, heading, userType, mt } = props;
+const InternshipList = (props) => {
+  const { bgColor,jobType, heading, userType, mt } = props;
   
   const [open, setOpen] = useState(false);
-  const [jobs, setJobs] = useState([]);
+  const [internships, setInternships] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     company: "",
     description: "",
     location: "",
-    salaryRange: "",
+    stipend: "",
     deadline: "",
   });
   // Fetch jobs from API
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchInternships = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/jobs-internships/get-job-posts",
+          "http://localhost:8000/api/jobs-internships/get-internship-posts",
           {
             method: "GET",
             credentials: "include", // Include credentials if needed
@@ -32,8 +32,8 @@ const JobList = (props) => {
         );
         if (response.ok) {
           const data = await response.json();
-          // console.log(data.message);
-          setJobs(data.message || []); // Assuming the API response has a `jobs` array
+        //   console.log(data.message);
+          setInternships(data.message || []); // Assuming the API response has a `jobs` array
         } else {
           console.error("Failed to fetch jobs:", response.statusText);
         }
@@ -42,9 +42,9 @@ const JobList = (props) => {
       }
     };
 
-    fetchJobs();
+    fetchInternships();
   }, []); // Empty dependency array ensures the fetch runs only on mount
-  console.log(jobs);
+  
   const handleAddJob = () => {
     setOpen(true); // Open the dialog box
   };
@@ -60,7 +60,7 @@ const JobList = (props) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/admin/add-job-post", {
+      const response = await fetch("http://localhost:8000/api/admin/add-internship-post", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -71,16 +71,16 @@ const JobList = (props) => {
   
       if (response.ok) {
         const result = await response.json();
-        console.log("Job Data Submitted Successfully:", result);
+        console.log("Internship Data Submitted Successfully:", result);
       
-        alert("Job added successfully!");
+        alert("Internship added successfully!");
       } else {
         const error = await response.json();
-        console.error("Error submitting job data:", error);
-        alert("Failed to add job. Please try again.");
+        console.error("Error submitting Internship data:", error);
+        alert("Failed to add Internship. Please try again.");
       }
     } catch (error) {
-      console.error("Network error while submitting job data:", error);
+      console.error("Network error while submitting Internship data:", error);
       alert("A network error occurred. Please check your connection and try again.");
     } finally {
       setFormData({
@@ -88,14 +88,14 @@ const JobList = (props) => {
         company: "",
         description: "",
         location: "",
-        salaryRange: "",
+        stipend: "",
         deadline: "",
       });
       setOpen(false); // Close the dialog after submission
     }
   };
   
-
+  console.log(internships);
   return (
     <div
       style={{
@@ -108,7 +108,7 @@ const JobList = (props) => {
       <h1 style={{ textAlign: "center" }}>{heading}</h1>
 
       {/* Show Add Job button only for admins */}
-      {userType === "admin" &&(
+      {userType === "admin" && (
         <div style={{ textAlign: "center", margin: "20px 0" }}>
           <Button
             variant="contained"
@@ -116,8 +116,7 @@ const JobList = (props) => {
             onClick={handleAddJob}
             style={{ backgroundColor: "#007bff", color: "#fff" }}
           >
-            <AddCircleOutlineIcon   sx={{ marginRight: 1 }} />
-            Add New Job
+            <AddCircleOutlineIcon   sx={{ marginRight: 1 }} /> Add New Internship
           </Button>
         </div>
       )}
@@ -128,15 +127,15 @@ const JobList = (props) => {
           flexDirection: "row",
           marginTop: "50px",
         }}
-        className="job-list"
+        className="internship-list"
         container
         spacing={2}
         justifyContent="center"
       >
-        {jobs.length > 0 ? (
-          jobs.map((job) => <JobCard key={job.id} job={job}  jobType={jobType}/>)
+        {internships.length > 0 ? (
+          internships.map((internship) => <JobCard key={internship._id} job={internship} jobType={jobType}/>)
         ) : (
-          <p style={{ textAlign: "center", marginTop: "20px" }}>No jobs available</p>
+          <p style={{ textAlign: "center", marginTop: "20px" }}>No Internships available</p>
         )}
       </Grid>
 
@@ -165,7 +164,7 @@ const JobList = (props) => {
             }}
           >
             <AddCircleOutlineIcon color="primary" />
-            Add New Job
+            Add New Internship
           </DialogTitle>
           <DialogContent
             sx={{
@@ -220,9 +219,9 @@ const JobList = (props) => {
             />
             <TextField
               margin="dense"
-              label="Salary Range"
-              name="salaryRange"
-              value={formData.salaryRange}
+              label="Stipend"
+              name="stipend"
+              value={formData.stipend}
               onChange={handleInputChange}
               fullWidth
               variant="outlined"
@@ -286,4 +285,4 @@ const JobList = (props) => {
   );
 };
 
-export default JobList;
+export default InternshipList;

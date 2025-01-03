@@ -18,6 +18,7 @@
 import React from "react";
 import JobList from "./job-internship/JobComponent";
 import { useAuth } from "../AuthContext";
+import InternshipList from "./job-internship/InternshipComponent";
 
 const JobAndInternships = () => {
   const { user } = useAuth();
@@ -35,17 +36,17 @@ const JobAndInternships = () => {
         heading="Job Postings"
         userType={user?.userType}
       />
-      <JobList
+      <InternshipList
         jobType="onCampusInternships"
         bgColor="whitesmoke"
-        heading="OnCampus Internship"
+        heading="OnCampus Internships"
         userType={user?.userType}
       />
-      <JobList
+      {/* <JobList
         jobType="offCampusJobs"
         bgColor="whitesmoke"
         heading="OffCampus Internship"
-      />
+      /> */}
     </div>
   );
 };

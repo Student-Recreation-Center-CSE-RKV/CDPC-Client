@@ -93,23 +93,42 @@ function Navbar() {
         <Toolbar disableGutters>
           {/* App Logo */}
  {/* CDPC Logo for Desktop and Mobile */}
-        <Typography 
-          variant="h4"
-          noWrap
-          component="a"
-          href="#"
-          sx={{
-            fontFamily: 'monospace',
-            fontWeight: 700, 
-            letterSpacing: '.2rem',
-            color: 'inherit',
-            textDecoration: 'none',
-            display: { xs: 'none', md: 'flex' }, // Show only on desktop
-            mr: 2,
-          }}
-        >
-          CDPC
-        </Typography>
+ <Box 
+      sx={{
+        alignItems: 'center', 
+        mr: 2, // Add margin to the right of the logo
+        display: { xs: 'none', md: 'flex' }
+      }}
+    >
+      {/* Logo Image */}
+      <img 
+        src="/logo.jpg" 
+        alt="logo"
+        style={{
+          height: '40px', 
+          marginRight: '12px', // Use marginRight here for plain CSS
+          borderRadius: '50%',
+        }}
+      />
+
+      {/* CDPC Text */}
+      <Typography
+        variant="h5"
+        noWrap
+        component="a"
+        href="#"
+        sx={{
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.1rem',
+          color: 'inherit',
+          textDecoration: 'none',
+          display: { xs: 'none', md: 'flex' }, // Show only on desktop
+        }}
+      >
+        CDPC
+      </Typography>
+    </Box>
 
         
 
@@ -127,10 +146,41 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-            {/* Center "CDPC" for mobile */}
-            <Box sx={{ flexGrow: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem', color: 'white' }}>
-            CDPC
+          <Box 
+            sx={{ 
+              flexGrow: 1, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: 'white', 
+            }}
+          >
+            {/* Logo Image */}
+            <img 
+              src="/logo.jpg" 
+              alt="CDPC Logo"
+              style={{
+                height: '40px', 
+                marginLeft:"-30px",
+                marginRight: '8px', // Space between the image and text
+                borderRadius:"50%"
+              }}
+            />
+            
+            {/* Text */}
+            <Typography 
+              variant="h6" 
+              sx={{
+                fontWeight: 'bold',
+                fontSize: '1.5rem',
+                fontFamily: 'monospace',
+                letterSpacing: '.2rem',
+              }}
+            >
+              CDPC
+            </Typography>
           </Box>
+
           <Menu anchorEl={anchorElNav} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu}>
             {pages.map((page) => (
               <MenuItem key={page.name} onClick={handleCloseNavMenu}>
@@ -179,7 +229,7 @@ function Navbar() {
                 '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.1)' },
               }}
             >
-              {page.icon && <span style={{ marginRight: '8px' }}>{page.icon}</span>}
+              {page.icon && <span style={{ marginRight: '4px' }}>{page.icon}</span>}
               {page.name}
             </Button>
           </NavLink>

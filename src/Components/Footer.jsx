@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography, Link, IconButton } from '@mui/material';
+import { Container, Grid, Typography, Link, IconButton ,Box} from '@mui/material';
 import { Facebook, Instagram, Twitter, LinkedIn } from '@mui/icons-material';  // Importing the social media icons
 
 const Footer = () => {
@@ -9,13 +9,28 @@ const Footer = () => {
         <Grid container spacing={4}>
           {/* Column 1 - About */}
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom>
-              Career Development & Placement Cell
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              {/* Logo Image */}
+              <img 
+                src="/logo.jpg" 
+                alt="logo"
+                style={{
+                  height: '60px', 
+                  marginRight: '12px',
+                  borderRadius: '50%',
+                }}
+              />
+              {/* Title */}
+              <Typography variant="h6" gutterBottom>
+                Career Development   & Placement Cell
+              </Typography>
+            </Box>
+            {/* About Text */}
             <Typography variant="body2" color="white">
               The Career Development and Placement Cell (CDPC) is dedicated to providing resources and opportunities for students' professional growth.
             </Typography>
           </Grid>
+
 
           {/* Column 2 - Quick Links */}
           <Grid item xs={12} sm={6} md={3}>
