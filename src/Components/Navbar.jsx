@@ -168,7 +168,7 @@ function Navbar() {
 
 
           {/* Desktop Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:80} }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:user?80:0} }}>
           {pages.map((page) => (
           <NavLink to={page.path} key={page.name} style={{ textDecoration: 'none' }}>
             <Button
