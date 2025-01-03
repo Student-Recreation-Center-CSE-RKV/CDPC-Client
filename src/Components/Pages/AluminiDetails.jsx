@@ -383,9 +383,8 @@ const AluminiDetails = () => {
 
   return (
     <div className="App">
-      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
-        <br /><br /><br />
-        <h1>Alumni Registration Details</h1>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 2, marginTop:"65px" }}>
+        <h1 style={{textAlign:"center"}}>Alumni Registration Details</h1>
         <Stepper
           activeStep={activeStep}
           alternativeLabel
