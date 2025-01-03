@@ -12,6 +12,9 @@ const JobCard = ({ job }) => {
             <span className="heading">Title :</span > {job.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
+            <span style={{fontWeight: 'bold'}} className="heading">Company :</span > {job.company}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             <span style={{fontWeight: 'bold'}} className="heading">Description :</span >{job.description}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
