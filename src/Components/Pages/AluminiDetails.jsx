@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 const steps = ["Personal Info", "Work Details", "Social Links & Goals", "Profile Setup"];
 
 const branches = ["Computer Science Engineering", "Electronics and Communication Engineering", "Electrical and Electronics Engineering", "Civil Engineering", "Mechanical Engineering", "Chemical Engineering"];
-const batches = ["2008", "2009", "2010", "2011", "2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"];
+const batches = ["2008", "2009", "2010", "2011", "2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032"];
 
 const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, avatarPreview, errors }) => {
   switch (activeStep) {
@@ -55,8 +55,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
-            helperText="Password must be at least 8 characters."    
-          
+            helperText={errors.password && "Password must be at least 8 characters."}
+            error={Boolean(errors.password)}
           />
           <TextField
             select
@@ -67,6 +67,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.batch && " Batch is required."}
+            error={Boolean(errors.batch)}
           >
             {batches.map((batch) => (
               <MenuItem key={batch} value={batch}>
@@ -93,6 +95,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.branch && " Branch is required."}
+            error={Boolean(errors.branch)}
           >
             {branches.map((branch) => (
               <MenuItem key={branch} value={branch}>
@@ -108,6 +112,8 @@ const StepContent = ({ activeStep, formData, handleChange, handleAvatarChange, a
             fullWidth
             margin="dense"
             size="small"
+            helperText={errors.phone && " Phone number is required."}
+            error={Boolean(errors.phone)}
           />
         </motion.div>
       );
@@ -288,9 +294,15 @@ const AluminiDetails = () => {
     if (activeStep === 0) {
       if (!formData.name) newErrors.name = true;
       if (!formData.email || !isEmailValid(formData.email)) newErrors.email = true;
-    } else if (activeStep === 1) {
+      if (formData.password.length < 8) newErrors.password = true;
+      if (!formData.batch) newErrors.batch = true;
+      if (!formData.branch) newErrors.branch = true;
+      if (formData.phone.length<10) newErrors.phone = true;
+    } 
+    if (activeStep === 1) {
       if (!formData.companyName) newErrors.companyName = true;
-    } else if (activeStep === 2) {
+    } 
+    if (activeStep === 2) {
       if (!formData.linkedin) newErrors.linkedin = true;
     }
     setErrors(newErrors);
@@ -299,6 +311,7 @@ const AluminiDetails = () => {
 
   const handleNext = () => {
     if (isStepValid()) {
+      setErrors({});
       setActiveStep((prevStep) => prevStep + 1);
     }
   };
@@ -310,6 +323,9 @@ const AluminiDetails = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if(errors[name]){
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: false}));
+    }
   };
 
   const handleAvatarChange = (e) => {
