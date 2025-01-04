@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -25,15 +25,51 @@ function ProfileCard() {
 
   const years = ['E1', 'E2', 'E3', 'E4'];
   const branches = ['Computer Science Engineering', 'Electronics and Communication Engineering','Electrical and Electronics Engineering','Civil Engineering','Mechanical Engineering','Chemical Engineering','Metallurgical and Materials Engineering'];
+  
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setAvatar(reader.result);
-      reader.readAsDataURL(file);
+  // Fetch user data from backend
+useEffect(() => {
+  const fetchProfileData = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/student/current-student', {
+        method: 'GET',
+        credentials:"include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const Student = await response.json();
+      // console.log("data",Student.data);
+      setProfileData(Student.data);
+
+      setAvatar(Student.data.avatar); // Assuming `avatar` is part of the response
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
     }
   };
+
+  fetchProfileData();
+}, []);
+
+const handleAvatarChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    // Preview the image for display
+    const reader = new FileReader();
+    reader.onload = () => {
+      setAvatar({
+        file: file, // Store the actual file for uploading
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,23 +79,73 @@ function ProfileCard() {
       setErrors({ ...errors, [name]: false });
     }
   };
-
-  const handleSaveProfile = () => {
-    // Simple form validation (can be expanded)
-    const newErrors = {
-      name: !profileData.name,
-      email: !profileData.email
-    };
-    setErrors(newErrors);
-
-    if (!newErrors.name && !newErrors.email) {
-      // Save profile logic
-      console.log('Profile saved:', profileData);
+  const handleSaveAvatar = async () => {
+    // Save avatar logic
+    if (avatar) {
+      console.log(avatar);
+      try {
+        // Create a FormData object to send the image file
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+  
+        const response = await fetch('http://localhost:8000/api/student/update-avatar', {
+          credentials:"include",
+          method: 'PATCH', // Assuming POST is the correct method for updating the avatar
+          body: formData, // Send the FormData object
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log('Avatar updated successfully:', data);
+        alert('Avatar updated successfully!');
+      } catch (error) {
+        console.error('Error updating avatar:', error);
+        alert('Failed to update avatar. Please try again later.');
+      }
+    } else {
+      alert('No avatar selected!');
     }
   };
+  
+  const handleSaveProfile = async () => {
+    // Simple form validation
+    const newErrors = {
+      name: !profileData.name,
+      email: !profileData.email,
+    };
+    setErrors(newErrors);
+  
+    if (!newErrors.name && !newErrors.email) {
+      try {
+        const response = await fetch('http://localhost:8000/api/student/update-details', {
+          method: 'POST', // Assuming this is the correct method for updating details
+          credentials:"include",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(profileData), // Send profileData as JSON
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log('Profile updated successfully:', data);
+        alert('Profile updated successfully!');
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Failed to update profile. Please try again later.');
+      }
+    }
+  };
+  
 
   return (
-    <Grid container component={Paper} elevation={3} sx={{ p: 3 }}>
+    <Grid container component={Paper} elevation={3} sx={{ p: 3 ,marginTop:7}}>
       <Typography variant="h4" align="center" sx={{ width: '100%', textAlign: 'center', mb: 3 }}>
         My Profile
       </Typography>
@@ -86,6 +172,15 @@ function ProfileCard() {
           <Typography variant="h6" sx={{ mt: 2, textAlign: 'center' }}>
             {profileData.name || 'Your Name'}
           </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+            onClick={handleSaveAvatar}
+          >
+            Save Avatar
+          </Button>
+          
         </Box>
 
         <Box component="form" flexGrow={1}>
