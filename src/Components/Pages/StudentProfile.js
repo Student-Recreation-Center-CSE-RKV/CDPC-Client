@@ -1,9 +1,10 @@
 import React, { useState ,useEffect} from 'react';
-import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper } from '@mui/material';
+import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper,CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 function ProfileCard() {
   const [avatar, setAvatar] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -56,19 +57,22 @@ useEffect(() => {
   fetchProfileData();
 }, []);
 
-const handleAvatarChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    // Preview the image for display
-    const reader = new FileReader();
-    reader.onload = () => {
-      setAvatar({
-        file: file, // Store the actual file for uploading
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-};
+  // Handle avatar change (preview)
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setAvatar({
+          file: file, // Store the file for uploading
+          preview: reader.result, // Store the preview URL
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
 
   const handleInputChange = (e) => {
@@ -79,37 +83,38 @@ const handleAvatarChange = (e) => {
       setErrors({ ...errors, [name]: false });
     }
   };
+  // Handle saving the avatar
   const handleSaveAvatar = async () => {
-    // Save avatar logic
-    if (avatar) {
-      console.log(avatar);
+    if (avatar && avatar.file) {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('avatar', avatar.file);
+
       try {
-        // Create a FormData object to send the image file
-        const formData = new FormData();
-        formData.append('avatar', avatar);
-  
         const response = await fetch('http://localhost:8000/api/student/update-avatar', {
-          credentials:"include",
-          method: 'PATCH', // Assuming POST is the correct method for updating the avatar
-          body: formData, // Send the FormData object
+          method: 'PATCH',
+          credentials: 'include',
+          body: formData,
         });
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
-        const data = await response.json();
-        console.log('Avatar updated successfully:', data);
+
+        const Res = await response.json();
+        console.log('Avatar updated successfully:', Res.data.avatar);
         alert('Avatar updated successfully!');
+        setAvatar(Res.data.avatar); // Update state with new avatar URL after successful upload
       } catch (error) {
         console.error('Error updating avatar:', error);
-        alert('Failed to update avatar. Please try again later.');
+        alert('Failed to update avatar.');
+      }finally {
+        setLoading(false); // Stop loading state once done
       }
     } else {
       alert('No avatar selected!');
     }
   };
-  
   const handleSaveProfile = async () => {
     // Simple form validation
     const newErrors = {
@@ -133,8 +138,11 @@ const handleAvatarChange = (e) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
   
-        const data = await response.json();
-        console.log('Profile updated successfully:', data);
+        const Student = await response.json();
+        setProfileData(Student.data);
+        console.log('Profile updated successfully:', Student.data);
+
+
         alert('Profile updated successfully!');
       } catch (error) {
         console.error('Error updating profile:', error);
@@ -153,7 +161,10 @@ const handleAvatarChange = (e) => {
       <Box display="flex" alignItems="flex-start" gap={3}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Box position="relative">
-            <Avatar src={avatar} sx={{ width: 150, height: 150 }} />
+          <Avatar
+            src={avatar && avatar.preview ? avatar.preview : avatar} // Use preview if available, else use the fetched URL
+            sx={{ width: 150, height: 150 }}
+          />
             <IconButton
               component="label"
               sx={{
@@ -172,14 +183,14 @@ const handleAvatarChange = (e) => {
           <Typography variant="h6" sx={{ mt: 2, textAlign: 'center' }}>
             {profileData.name || 'Your Name'}
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2 }}
-            onClick={handleSaveAvatar}
-          >
-            Save Avatar
-          </Button>
+                {/* Show "Uploading" spinner if loading */}
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Button onClick={handleSaveAvatar} variant="contained" disabled={loading}>
+                Save Avatar
+              </Button>
+            )}
           
         </Box>
 

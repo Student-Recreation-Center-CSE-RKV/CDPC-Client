@@ -7,7 +7,7 @@ import AlumniProfileCard from "./AluminiProfile";
 import ProfileCard from "./StudentProfile";
 const ProfileCardStudent = () => {
   const {user}=useAuth();
-  console.log(user);
+  // console.log(user);
   const [selected, setSelected] = useState("profile");
 
   return (

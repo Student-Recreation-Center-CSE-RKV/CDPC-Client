@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper } from '@mui/material';
+import React, { useState,useEffect } from 'react';
+import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper ,CircularProgress} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 function AlumniProfileCard() {
   const [avatar, setAvatar] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [alumniData, setAlumniData] = useState({
     name: '',
     email: '',
     batch: '',
     branch: '',
     phone: '',
-    company: '',
+    companyName: '',
     designation: '',
     workingLocation: '',
     experience: '',
@@ -31,11 +32,48 @@ function AlumniProfileCard() {
   const batches = ['2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
   const branches = ['Computer Science Engineering', 'Electronics and Communication Engineering', 'Electrical and Electronics Engineering', 'Civil Engineering', 'Mechanical Engineering', 'Chemical Engineering', 'Metallurgical and Materials Engineering'];
 
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/alumni/current-alumni', {
+          method: 'GET',
+          credentials:"include",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const Alumni = await response.json();
+        // console.log("data",Alumni);
+        setAlumniData(Alumni.data);
+  
+        setAvatar(Alumni.data.avatar); // Assuming `avatar` is part of the response
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+  
+    fetchProfileData();
+  }, []);
+
+  // console.log("AlumniData: ",alumniData);
+  // Handle avatar change (preview)
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setAvatar(reader.result);
+
+      reader.onloadend = () => {
+        setAvatar({
+          file: file, // Store the file for uploading
+          preview: reader.result, // Store the preview URL
+        });
+      };
+
       reader.readAsDataURL(file);
     }
   };
@@ -49,30 +87,87 @@ function AlumniProfileCard() {
     }
   };
 
-  const handleSaveProfile = () => {
-    // Simple form validation (can be expanded)
-    const newErrors = {
-      name: !alumniData.name,
-      email: !alumniData.email
-    };
-    setErrors(newErrors);
 
-    if (!newErrors.name && !newErrors.email) {
-      // Save profile logic
-      console.log('Alumni Profile saved:', alumniData);
+  const handleSaveAvatar = async () => {
+    if (avatar && avatar.file) {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('avatar', avatar.file);
+
+      try {
+        const response = await fetch('http://localhost:8000/api/alumni/update-avatar', {
+          method: 'PATCH',
+          credentials: 'include',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const Res = await response.json();
+        console.log('Avatar updated successfully:', Res.data.avatar);
+        alert('Avatar updated successfully!');
+        setAvatar(Res.data.avatar); // Update state with new avatar URL after successful upload
+      } catch (error) {
+        console.error('Error updating avatar:', error);
+        alert('Failed to update avatar.');
+      }finally {
+        setLoading(false); // Stop loading state once done
+      }
+    } else {
+      alert('No avatar selected!');
     }
   };
 
+  const handleSaveProfile = async () => {
+    // Simple form validation
+    const newErrors = {
+      name: !alumniData.name,
+      email: !alumniData.email,
+    };
+    setErrors(newErrors);
+  
+    if (!newErrors.name && !newErrors.email) {
+      try {
+        const response = await fetch('http://localhost:8000/api/alumni/update-details', {
+          method: 'POST', // Assuming this is the correct method for updating details
+          credentials:"include",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(alumniData), // Send profileData as JSON
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const Alumni = await response.json();
+        setAlumniData(Alumni.data);
+        // console.log('Profile updated successfully:', Alumni.data);
+
+
+        alert('Profile updated successfully!');
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Failed to update profile. Please try again later.');
+      }
+    }
+  };
   return (
     <Grid container component={Paper} elevation={3} sx={{ p: 3 }}>
-      <Typography variant="h4" align="center" sx={{ width: '100%', textAlign: 'center', mb: 3 }}>
+      <Typography variant="h4" align="center" sx={{ width: '100%', textAlign: 'center', mb: 3,mt:7 }}>
         Alumni Profile
       </Typography>
 
       <Box display="flex" alignItems="flex-start" gap={3}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Box position="relative">
-            <Avatar src={avatar} sx={{ width: 150, height: 150 }} />
+            <Avatar
+              src={avatar && avatar.preview ? avatar.preview : avatar} // Use preview if available, else use the fetched URL
+                  sx={{ width: 150, height: 150 }}
+            />
             <IconButton
               component="label"
               sx={{
@@ -91,6 +186,14 @@ function AlumniProfileCard() {
           <Typography variant="h6" sx={{ mt: 2, textAlign: 'center' }}>
             {alumniData.name || 'Your Name'}
           </Typography>
+          {/* Show "Uploading" spinner if loading */}
+            {loading ? (
+                      <CircularProgress />
+                      ) : (
+                <Button onClick={handleSaveAvatar} variant="contained" disabled={loading}>
+                  Save Avatar
+                </Button>
+            )}
         </Box>
 
         <Box component="form" flexGrow={1}>
@@ -161,9 +264,9 @@ function AlumniProfileCard() {
 
           <TextField
             fullWidth
-            name="company"
-            label="Company"
-            value={alumniData.company}
+            name="companyName"
+            label="Company Name"
+            value={alumniData.companyName}
             onChange={handleInputChange}
             margin="normal"
           />
