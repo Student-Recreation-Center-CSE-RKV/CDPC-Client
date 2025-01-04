@@ -5,6 +5,7 @@ import { useAuth } from "../AuthContext";
 import { Box } from "@mui/material";
 import AlumniProfileCard from "./AluminiProfile";
 import ProfileCard from "./StudentProfile";
+import ProfileDetails from "../ProfileDetails";
 const ProfileCardStudent = () => {
   const {user}=useAuth();
   // console.log(user);
@@ -13,8 +14,10 @@ const ProfileCardStudent = () => {
   return (
     <Box display="flex">
       <Sidebar setSelected={setSelected} />
-      {selected === "profile" && user.userType==="student" && <ProfileCard />}
-      {selected === "profile" && user.userType==="alumni" && <AlumniProfileCard />}
+      {selected === "edit-profile" && user.userType==="student" && <ProfileCard />}
+      {selected === "edit-profile" && user.userType==="alumni" && <AlumniProfileCard />}
+      {selected === "profile" && user.userType==="student" && <ProfileDetails />}
+      {selected === "profile" && user.userType==="alumni" && <ProfileDetails />}
       {selected === "activity" && <Box p={4}>Activity Page</Box>}
     </Box>
   );

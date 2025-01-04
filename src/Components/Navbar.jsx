@@ -19,7 +19,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useAuth } from './AuthContext';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
@@ -72,7 +72,7 @@ function Navbar() {
       sx={{ height: 25, width: 25 }}
     />),
     },
-    { name: "Edit", path: "/edit-details", icon: <EditIcon /> },
+    // { name: "Edit", path: "/profile", icon: <EditIcon /> },
     { name: "Logout", path: "/logout", icon: <LogoutIcon /> },
   ];   
   

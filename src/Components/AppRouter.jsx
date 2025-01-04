@@ -19,7 +19,7 @@ import AluminiDetails from './Pages/AluminiDetails';
 import StudentDetails from './Pages/StudentDetails';
 import AdminDetails from './Pages/AdminDetails';
 import ProfileCardStudent from './Pages/ProfileCardStudent';
-import ProfileDetails from './ProfileDetails';
+// import ProfileDetails from './ProfileDetails';
 
 const AppRouter = () => {
   return (
@@ -29,7 +29,7 @@ const AppRouter = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />  {/* Home as default route */}
           <Route path="about" element={<About />} />
-          <Route path='/profile' element={<ProfileDetails/>}/>
+          {/* <Route path='/profile' element={<ProfileDetails/>}/> */}
           <Route path="job-internships" element={<JobAndInternships />} />
           <Route path='placement-preparation' element={<PlacementPreparation/>}/>
           <Route path='placement-analytics' element={<PlacementAnalytics/>}/>
@@ -46,7 +46,7 @@ const AppRouter = () => {
           <Route path="alumini-details" element={<AluminiDetails/>}/>
           <Route path="student-details" element={<StudentDetails/>}/>
           <Route path="admin-details" element={<AdminDetails/>}/>
-          <Route path="edit-details" element={<ProfileCardStudent/>}/>
+          <Route path="profile" element={<ProfileCardStudent/>}/>
         </Route>
       </Routes>
     </Router>
