@@ -2,26 +2,21 @@ import React, { useState,useEffect } from 'react';
 import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper ,CircularProgress} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
-const AlumniProfileCard = () => {
+const AdminProfileCard = () => {
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [alumniData, setAlumniData] = useState({
+  const [adminData, setAdminData] = useState({
     name: '',
+    username: '',
     email: '',
-    batch: '',
-    branch: '',
     phone: '',
-    companyName: '',
     designation: '',
-    workingLocation: '',
     experience: '',
     linkedin: '',
     github: '',
     portfolio: '',
     facebook: '',
-    careerGoals: '',
     achievements: '',
-    skills: ''
   });
 
   const [errors, setErrors] = useState({
@@ -29,13 +24,11 @@ const AlumniProfileCard = () => {
     email: false
   });
 
-  const batches = ['2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
-  const branches = ['Computer Science Engineering', 'Electronics and Communication Engineering', 'Electrical and Electronics Engineering', 'Civil Engineering', 'Mechanical Engineering', 'Chemical Engineering', 'Metallurgical and Materials Engineering'];
-
+  
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/alumni/current-alumni', {
+        const response = await fetch('http://localhost:8000/api/admin/current-admin', {
           method: 'GET',
           credentials:"include",
           headers: {
@@ -47,11 +40,11 @@ const AlumniProfileCard = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
   
-        const Alumni = await response.json();
+        const Admin = await response.json();
         // console.log("data",Alumni);
-        setAlumniData(Alumni.data);
+        setAdminData(Admin.data);
   
-        setAvatar(Alumni.data.avatar); // Assuming `avatar` is part of the response
+        setAvatar(Admin.data.avatar); // Assuming `avatar` is part of the response
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -60,8 +53,7 @@ const AlumniProfileCard = () => {
     fetchProfileData();
   }, []);
 
-  // console.log("AlumniData: ",alumniData);
-  // Handle avatar change (preview)
+  
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -80,7 +72,7 @@ const AlumniProfileCard = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setAlumniData({ ...alumniData, [name]: value });
+    setAdminData({ ...adminData, [name]: value });
 
     if (value.trim() !== '') {
       setErrors({ ...errors, [name]: false });
@@ -123,8 +115,8 @@ const AlumniProfileCard = () => {
   const handleSaveProfile = async () => {
     // Simple form validation
     const newErrors = {
-      name: !alumniData.name,
-      email: !alumniData.email,
+      name: !adminData.name,
+      email: !adminData.email,
     };
     setErrors(newErrors);
   
@@ -136,16 +128,16 @@ const AlumniProfileCard = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(alumniData), // Send profileData as JSON
+          body: JSON.stringify(adminData), // Send profileData as JSON
         });
   
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
   
-        const Alumni = await response.json();
-        setAlumniData(Alumni.data);
-        // console.log('Profile updated successfully:', Alumni.data);
+        const Admin = await response.json();
+        setAdminData(Admin.data);
+      
 
 
         alert('Profile updated successfully!');
@@ -158,7 +150,7 @@ const AlumniProfileCard = () => {
   return (
     <Grid container component={Paper} elevation={3} sx={{ p: 3 }}>
       <Typography variant="h4" align="center" sx={{ width: '100%', textAlign: 'center', mb: 3,mt:7 }}>
-        Alumni Profile
+        Admin Profile
       </Typography>
 
       <Box display="flex" alignItems="flex-start" gap={3}>
@@ -184,7 +176,7 @@ const AlumniProfileCard = () => {
             </IconButton>
           </Box>
           <Typography variant="h6" sx={{ mt: 2, textAlign: 'center' }}>
-            {alumniData.name || 'Your Name'}
+            {adminData.name || 'Your Name'}
           </Typography>
           {/* Show "Uploading" spinner if loading */}
             {loading ? (
@@ -200,8 +192,8 @@ const AlumniProfileCard = () => {
           <TextField
             fullWidth
             name="name"
-            label="Name"
-            value={alumniData.name}
+            label="Full Name"
+            value={adminData.name}
             onChange={handleInputChange}
             margin="normal"
             error={errors.name}
@@ -213,87 +205,34 @@ const AlumniProfileCard = () => {
             fullWidth
             name="email"
             label="Email"
-            value={alumniData.email}
+            value={adminData.email}
             onChange={handleInputChange}
             margin="normal"
             error={errors.email}
             helperText={errors.email && 'Email is required'}
             required
           />
-
-          <TextField
-            fullWidth
-            name="batch"
-            label="Batch"
-            value={alumniData.batch}
-            onChange={handleInputChange}
-            margin="normal"
-            select
-          >
-            {batches.map((batch) => (
-              <MenuItem key={batch} value={batch}>
-                {batch}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            fullWidth
-            name="branch"
-            label="Branch"
-            value={alumniData.branch}
-            onChange={handleInputChange}
-            margin="normal"
-            select
-          >
-            {branches.map((branch) => (
-              <MenuItem key={branch} value={branch}>
-                {branch}
-              </MenuItem>
-            ))}
-          </TextField>
-
           <TextField
             fullWidth
             name="phone"
             label="Phone"
-            value={alumniData.phone}
+            value={adminData.phone}
             onChange={handleInputChange}
             margin="normal"
           />
-
-          <TextField
-            fullWidth
-            name="companyName"
-            label="Company Name"
-            value={alumniData.companyName}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-
           <TextField
             fullWidth
             name="designation"
             label="Designation"
-            value={alumniData.designation}
+            value={adminData.designation}
             onChange={handleInputChange}
             margin="normal"
           />
-
-          <TextField
-            fullWidth
-            name="workingLocation"
-            label="Working Location"
-            value={alumniData.workingLocation}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-
           <TextField
             fullWidth
             name="experience"
             label="Experience"
-            value={alumniData.experience}
+            value={adminData.experience}
             onChange={handleInputChange}
             margin="normal"
             multiline
@@ -304,7 +243,7 @@ const AlumniProfileCard = () => {
             fullWidth
             name="linkedin"
             label="LinkedIn"
-            value={alumniData.linkedin}
+            value={adminData.linkedin}
             onChange={handleInputChange}
             margin="normal"
           />
@@ -313,7 +252,7 @@ const AlumniProfileCard = () => {
             fullWidth
             name="github"
             label="GitHub"
-            value={alumniData.github}
+            value={adminData.github}
             onChange={handleInputChange}
             margin="normal"
           />
@@ -322,7 +261,7 @@ const AlumniProfileCard = () => {
             fullWidth
             name="portfolio"
             label="Portfolio"
-            value={alumniData.portfolio}
+            value={adminData.portfolio}
             onChange={handleInputChange}
             margin="normal"
           />
@@ -331,44 +270,20 @@ const AlumniProfileCard = () => {
             fullWidth
             name="facebook"
             label="Facebook"
-            value={alumniData.facebook}
+            value={adminData.facebook}
             onChange={handleInputChange}
             margin="normal"
           />
-
-          <TextField
-            fullWidth
-            name="careerGoals"
-            label="Career Goals"
-            value={alumniData.careerGoals}
-            onChange={handleInputChange}
-            margin="normal"
-            multiline
-            rows={4}
-          />
-
           <TextField
             fullWidth
             name="achievements"
             label="Achievements"
-            value={alumniData.achievements}
+            value={adminData.achievements}
             onChange={handleInputChange}
             margin="normal"
             multiline
             rows={4}
           />
-
-          <TextField
-            fullWidth
-            name="skills"
-            label="Skills"
-            value={alumniData.skills}
-            onChange={handleInputChange}
-            margin="normal"
-            multiline
-            rows={4}
-          />
-
           <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={handleSaveProfile}>
             Save Profile
           </Button>
@@ -378,4 +293,4 @@ const AlumniProfileCard = () => {
   );
 }
 
-export default AlumniProfileCard;
+export default AdminProfileCard;
