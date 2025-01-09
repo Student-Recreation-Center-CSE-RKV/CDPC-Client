@@ -20,6 +20,7 @@ const ProfileCardStudent = () => {
       {selected === "edit-profile" && user.userType==="admin" && <AdminProfileCard />}
       {selected === "profile" && user.userType==="student" && <ProfileDetails />}
       {selected === "profile" && user.userType==="alumni" && <ProfileDetails />}
+      {selected === "profile" && user.userType==="admin" && <ProfileDetails />}
       {selected === "activity" && <Box p={4}>Activity Page</Box>}
     </Box>
   );

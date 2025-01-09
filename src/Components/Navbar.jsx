@@ -18,7 +18,7 @@ import UserSettingsMenu from './UserSettingsMenu';
 import HomeIcon from '@mui/icons-material/Home';
 import { useAuth } from './AuthContext';
 import LoginIcon from '@mui/icons-material/Login';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+// import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -102,17 +102,17 @@ function Navbar() {
     >
       {/* Logo Image */}
       <img 
-        src="/logo.jpg" 
+        src="/logo1.png" 
         alt="logo"
         style={{
-          height: '40px', 
+          height: '80px', 
           marginRight: '12px', // Use marginRight here for plain CSS
           borderRadius: '50%',
         }}
       />
 
       {/* CDPC Text */}
-      <Typography
+      {/* <Typography
         variant="h5"
         noWrap
         component="a"
@@ -127,7 +127,7 @@ function Navbar() {
         }}
       >
         CDPC
-      </Typography>
+      </Typography> */}
     </Box>
 
         
@@ -157,10 +157,10 @@ function Navbar() {
           >
             {/* Logo Image */}
             <img 
-              src="/logo.jpg" 
+              src="/logo1.png" 
               alt="CDPC Logo"
               style={{
-                height: '40px', 
+                height: '60px', 
                 marginLeft:"-30px",
                 marginRight: '8px', // Space between the image and text
                 borderRadius:"50%"
@@ -177,7 +177,7 @@ function Navbar() {
                 letterSpacing: '.2rem',
               }}
             >
-              CDPC
+              RKVALLEY
             </Typography>
           </Box>
 
@@ -206,19 +206,19 @@ function Navbar() {
                   Login
                 </NavLink>
               </MenuItem>,
-              <MenuItem key="signup">
-                <NavLink to="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-                  <PersonAddIcon sx={{ marginRight: '8px' }} />
-                  Signup
-                </NavLink>
-              </MenuItem>,
+              // <MenuItem key="signup">
+              //   <NavLink to="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              //     <PersonAddIcon sx={{ marginRight: '8px' }} />
+              //     Signup
+              //   </NavLink>
+              // </MenuItem>,
             ]}
           </Menu>
         </Box>
 
 
           {/* Desktop Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:user?80:0} }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:user?80:40} }}>
           {pages.map((page) => (
           <NavLink to={page.path} key={page.name} style={{ textDecoration: 'none' }}>
             <Button
@@ -260,7 +260,7 @@ function Navbar() {
                 Login
               </Button>
             </NavLink>
-            <NavLink to="/dashboard" style={{ textDecoration: 'none' }}>
+            {/* <NavLink to="/dashboard" style={{ textDecoration: 'none' }}>
               <Button
                 sx={{
                   color: 'white',
@@ -273,7 +273,7 @@ function Navbar() {
                 <PersonAddIcon />
                 Signup
               </Button>
-            </NavLink>
+            </NavLink> */}
           </Box>
           )}
           

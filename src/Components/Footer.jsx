@@ -12,10 +12,10 @@ const Footer = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               {/* Logo Image */}
               <img 
-                src="/logo.jpg" 
+                src="/logo1.png" 
                 alt="logo"
                 style={{
-                  height: '60px', 
+                  height: '80px', 
                   marginRight: '12px',
                   borderRadius: '50%',
                 }}

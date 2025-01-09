@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { TextField, MenuItem, Button, Avatar, IconButton, Grid, Typography, Box, Paper ,CircularProgress} from '@mui/material';
+import { TextField, Button, Avatar, IconButton, Grid, Typography, Box, Paper ,CircularProgress} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 const AdminProfileCard = () => {
@@ -54,7 +54,8 @@ const AdminProfileCard = () => {
   }, []);
 
   
-  const handleAvatarChange = (e) => {
+   // Handle avatar change (preview)
+   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -87,7 +88,7 @@ const AdminProfileCard = () => {
       formData.append('avatar', avatar.file);
 
       try {
-        const response = await fetch('http://localhost:8000/api/alumni/update-avatar', {
+        const response = await fetch('http://localhost:8000/api/admin/update-avatar', {
           method: 'PATCH',
           credentials: 'include',
           body: formData,
@@ -122,7 +123,7 @@ const AdminProfileCard = () => {
   
     if (!newErrors.name && !newErrors.email) {
       try {
-        const response = await fetch('http://localhost:8000/api/alumni/update-details', {
+        const response = await fetch('http://localhost:8000/api/admin/update-details', {
           method: 'POST', // Assuming this is the correct method for updating details
           credentials:"include",
           headers: {
@@ -214,6 +215,15 @@ const AdminProfileCard = () => {
           />
           <TextField
             fullWidth
+            name="username"
+            label=" Username"
+            value={adminData.username}
+            onChange={handleInputChange}
+            margin="normal"
+            multiline
+          />
+          <TextField
+            fullWidth
             name="phone"
             label="Phone"
             value={adminData.phone}
@@ -228,61 +238,16 @@ const AdminProfileCard = () => {
             onChange={handleInputChange}
             margin="normal"
           />
+   
           <TextField
             fullWidth
-            name="experience"
-            label="Experience"
-            value={adminData.experience}
+            name="employeeId"
+            label="Employee ID"
+            value={adminData.employeeId}
             onChange={handleInputChange}
             margin="normal"
             multiline
-            rows={4}
-          />
-
-          <TextField
-            fullWidth
-            name="linkedin"
-            label="LinkedIn"
-            value={adminData.linkedin}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-
-          <TextField
-            fullWidth
-            name="github"
-            label="GitHub"
-            value={adminData.github}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-
-          <TextField
-            fullWidth
-            name="portfolio"
-            label="Portfolio"
-            value={adminData.portfolio}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-
-          <TextField
-            fullWidth
-            name="facebook"
-            label="Facebook"
-            value={adminData.facebook}
-            onChange={handleInputChange}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            name="achievements"
-            label="Achievements"
-            value={adminData.achievements}
-            onChange={handleInputChange}
-            margin="normal"
-            multiline
-            rows={4}
+        
           />
           <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={handleSaveProfile}>
             Save Profile
