@@ -80,6 +80,7 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
+        marginTop:{xs:0,md:4}
       }}
     >
       <motion.div

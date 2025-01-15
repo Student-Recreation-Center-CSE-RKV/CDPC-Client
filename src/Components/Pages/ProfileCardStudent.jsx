@@ -15,12 +15,12 @@ const ProfileCardStudent = () => {
   return (
     <Box display="flex">
       <Sidebar setSelected={setSelected} />
-      {selected === "edit-profile" && user.userType==="student" && <ProfileCard />}
-      {selected === "edit-profile" && user.userType==="alumni" && <AlumniProfileCard />}
-      {selected === "edit-profile" && user.userType==="admin" && <AdminProfileCard />}
-      {selected === "profile" && user.userType==="student" && <ProfileDetails />}
-      {selected === "profile" && user.userType==="alumni" && <ProfileDetails />}
-      {selected === "profile" && user.userType==="admin" && <ProfileDetails />}
+      {selected === "edit-profile" && user?.userType==="student" && <ProfileCard />}
+      {selected === "edit-profile" && user?.userType==="alumni" && <AlumniProfileCard />}
+      {selected === "edit-profile" && user?.userType==="admin" && <AdminProfileCard />}
+      {selected === "profile" && user?.userType==="student" && <ProfileDetails />}
+      {selected === "profile" && user?.userType==="alumni" && <ProfileDetails />}
+      {selected === "profile" && user?.userType==="admin" && <ProfileDetails />}
       {selected === "activity" && <Box p={4}>Activity Page</Box>}
     </Box>
   );

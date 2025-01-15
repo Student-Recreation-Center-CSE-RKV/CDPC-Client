@@ -16,6 +16,7 @@ const Sidebar = ({ setSelected }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        marginTop:4
       }}
     >
       <Box>
@@ -77,7 +78,7 @@ const Sidebar = ({ setSelected }) => {
         color="text.secondary"
         sx={{ textAlign: "center", mt: 2 }}
       >
-        © 2025 Your App Name
+        © 2025 CDPC
       </Typography>
     </Box>
   );

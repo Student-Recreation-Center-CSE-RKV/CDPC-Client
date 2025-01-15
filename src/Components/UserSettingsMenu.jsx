@@ -16,9 +16,11 @@ const UserSettingsMenu = ({ settings, user,logout}) => {
   const handleLogout = async () => {
     try {
       const logoutUrl =
-        user.userType === "alumni"
-          ? "http://localhost:8000/api/alumni/logout"
-          : "http://localhost:8000/api/student/logout";
+  user.userType === "alumni"
+    ? "http://localhost:8000/api/alumni/logout"
+    : user.userType === "admin"
+    ? "http://localhost:8000/api/admin/logout"
+    : "http://localhost:8000/api/student/logout";
 
       const response = await fetch(logoutUrl, {
         method: "POST",
