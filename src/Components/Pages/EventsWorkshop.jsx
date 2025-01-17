@@ -197,23 +197,31 @@ const handleCloseDialog = () => {
       feedback: isFeedback ? e.target.formFeedback.value : null,
       eventId: selectedEvent?._id, // Include the event ID if necessary
     };
+    
   
     try {
-      const response = await axios.post("http://localhost:8000/api/event/registrations", formData, {
+      const url = isFeedback
+      ? `http://localhost:8000/api/event/registrations/feedback`
+      : "http://localhost:8000/api/event/registrations";
+      const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true, // Include credentials (cookies, authorization headers)
       });
       // console.log(response);
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         alert(isFeedback ? "Feedback submitted successfully!" : "Registration submitted successfully!");
       } else {
         alert("Submission failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
+       // Check if error response is 404 and show custom message
+    if (error.response && error.response.status === 404) {
+      alert("Pre-registration is mandatory for Feedback");
+    } else {
       alert("An error occurred. Please try again.");
+    }
     } finally {
       setShowModal(false);
     }
@@ -413,6 +421,61 @@ const handleCloseDialog = () => {
           Past Events
         </Button>
         </div>
+        {!showLatest && (
+          <>
+  <style>
+    {`
+      @keyframes scrollText {
+        0% {
+          transform: translateX(200%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+    /* Media query for medium screens and larger (md and above) */
+      @media (min-width: 768px) {
+        @keyframes scrollText {
+          0% {
+            transform: translateX(200%); /* Use 200% for larger screens */
+          }
+          100% {
+            transform: translateX(-100%); /* Use 200% for larger screens */
+          }
+        }
+      }
+    `}
+  </style>
+  <div 
+    style={{
+      width: "100%",
+      overflow: "hidden",
+      position: "relative",
+      backgroundColor: "#f8f9fa", // Optional background color for contrast
+      padding: "10px 0",
+      marginBottom: "10px",
+      height: "30px", // Adjust height as per text size
+      display: "flex", // Ensures proper alignment
+      // alignItems: "center", // Vertically centers the text
+    }}
+  >
+    <p
+      style={{
+        whiteSpace: "nowrap",
+        display: "inline-block",
+        animation: "scrollText 15s linear infinite",
+        color: "red",
+        fontSize: "16px",
+        margin: 0,
+      }}
+    >
+      Pre-registration is mandatory to give feedback
+    </p>
+  </div>
+</>
+
+        
+        )}
       </div>
       <div className="row">
         {showLatest ? renderEvents(latestEventsData, true) : renderEvents(pastEventsData, false)}
