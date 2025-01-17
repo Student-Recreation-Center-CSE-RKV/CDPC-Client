@@ -101,7 +101,7 @@ const JobList = (props) => {
       style={{
         padding: "20px",
         color: "black",
-        marginTop: mt || "50px",
+        marginTop: mt || "60px",
         backgroundColor: bgColor,
       }}
     >
