@@ -43,7 +43,7 @@ const Login = () => {
   
       if (response.ok) {
         const Data = await response.json();
-        console.log("Login Successful:", Data);
+        // console.log("Login Successful:", Data);
         
         // Redirect based on the role
         if (role === "student") {

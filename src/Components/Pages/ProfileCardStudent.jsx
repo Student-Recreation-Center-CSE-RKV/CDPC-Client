@@ -7,6 +7,7 @@ import AlumniProfileCard from "./AluminiProfile";
 import AdminProfileCard from "./AdminProfile";
 import ProfileCard from "./StudentProfile";
 import ProfileDetails from "../ProfileDetails";
+import AdminDashboard from "./AdminDashboard";
 const ProfileCardStudent = () => {
   const {user}=useAuth();
   // console.log(user);
@@ -21,7 +22,7 @@ const ProfileCardStudent = () => {
       {selected === "profile" && user?.userType==="student" && <ProfileDetails />}
       {selected === "profile" && user?.userType==="alumni" && <ProfileDetails />}
       {selected === "profile" && user?.userType==="admin" && <ProfileDetails />}
-      {selected === "activity" && <Box p={4}>Activity Page</Box>}
+      {selected === "dashboard" && user?.userType==="admin" && <AdminDashboard/>}
     </Box>
   );
 };
