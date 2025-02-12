@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Button, Typography, Container, Box, Paper } from "@mui/material";
 import Companies from "./Companies";
 import PlacementAnalytics from "./PlacementAnalytics";
+import UploadPlacementData from "./UploadPlacementData";
 
 const AdminDashboard = () => {
   // State to track the active button (default: 'Overview')
@@ -17,7 +18,11 @@ const AdminDashboard = () => {
       case "Companies":
         return <Companies />;
       case "Placement Data":
-        return <Typography variant="h5">Analyze Placement Data Here!</Typography>;
+        return <div style={{ width: "100%", margin: "0 auto", padding: "1px" }}>
+        <UploadPlacementData />
+          </div>
+    
+        
       case "Reports":
         return <Typography variant="h5">Generate and View Reports Here!</Typography>;
       default:

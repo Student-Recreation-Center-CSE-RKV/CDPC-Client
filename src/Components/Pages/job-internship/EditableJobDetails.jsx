@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Typography, Radio, RadioGroup,FormControl ,TextField, Button, Grid, Card, CardContent, IconButton, Checkbox, FormControlLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-const EditableJobDetails = ({ job, onSave, onCancel }) => {
+import { Delete } from '@mui/icons-material';
+import axios from 'axios';
+const EditableJobDetails = ({ job, onSave, onCancel,refresh }) => {
     // console.log(job.deadline);
     const [formData, setFormData] = useState({
         title: job?.title || '',
@@ -22,7 +23,30 @@ const EditableJobDetails = ({ job, onSave, onCancel }) => {
       });
     // console.log(formData.requiredSkills);      
       
-
+          // Handle delete functionality
+    const onDelete = async () => {
+      // Ask for confirmation before deleting
+      const confirmDelete = window.confirm("Are you sure you want to delete this Job?");
+      if (!confirmDelete) return; // Exit if the user cancels the deletion
+    
+      try {
+        // Send a DELETE request to the API endpoint with credentials
+        await axios.delete(
+          `http://localhost:8000/api/jobs-internships/id/${job._id}`,
+          { withCredentials: true } // Include credentials (cookies, tokens, etc.)
+        );
+    
+        // Show success alert
+        alert("Job deleted successfully!");
+    
+        // Call the onBack function to navigate back or refresh the list
+        if (onCancel) onCancel();
+        refresh();
+      } catch (err) {
+        // Handle errors
+        alert("Failed to delete Job. Please try again.");
+      }
+    };
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -77,8 +101,20 @@ const EditableJobDetails = ({ job, onSave, onCancel }) => {
             <IconButton onClick={onCancel} sx={{ position: "absolute", top: 20, right: 20, color: "gray", '&:hover': { color: "black" } }}>
             <CloseIcon />
             </IconButton>
+             
             <CardContent>
-            <Typography variant="h4" mb={3}>Edit Job Details</Typography>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", mb: 3 }}>
+            <Typography 
+            variant="h4"
+            sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}
+            >
+            Edit Job Details
+          </Typography>
+              <IconButton onClick={onDelete} color="error">
+                  <Delete />
+              </IconButton>
+           </Box>
+
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}><TextField label="Job Title" name="title" value={formData.title} onChange={handleChange} fullWidth /></Grid>
                 <Grid item xs={12} sm={6}><TextField label="Location" name="location" value={formData.location} onChange={handleChange} fullWidth /></Grid>
@@ -92,11 +128,11 @@ const EditableJobDetails = ({ job, onSave, onCancel }) => {
                 <Grid item xs={12} sm={6}><TextField label="Application Deadline" type="date" name="deadline" value={formData.deadline?formData.deadline.split("T")[0] : ""} onChange={handleChange} InputLabelProps={{
     shrink: true, // Ensures label doesn't overlap the date picker
   }} fullWidth /></Grid>
-                <Grid item xs={12}><Typography variant="body1">Job Type:</Typography>
+                <Grid item xs={12} sm={6}><Typography variant="body1">Job Type:</Typography>
                 <FormControlLabel control={<Checkbox checked={formData.jobType === 'Full-time'} onChange={() => setFormData({ ...formData, jobType: 'Full-time' })} />} label="Full-time" />
                 <FormControlLabel control={<Checkbox checked={formData.jobType === 'Internship'} onChange={() => setFormData({ ...formData, jobType: 'Internship' })} />} label="Internship" />
                 </Grid>
-                <Grid item xs={12} >
+                <Grid item xs={12} sm={6} >
                 <Typography variant="body1">Is Active:</Typography>
                 <FormControl component="fieldset">
                     <RadioGroup

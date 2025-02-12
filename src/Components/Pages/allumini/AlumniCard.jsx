@@ -7,7 +7,7 @@ import './AlumniCard.css';
 const AlumniCard = ({ alum }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const navigate = useNavigate();
-
+    setIsExpanded(false);
     const goToProfile = () => {
         navigate(`/profile/${alum.id}`);  // Navigate to profile page
     };

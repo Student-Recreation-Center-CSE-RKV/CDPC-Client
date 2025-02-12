@@ -1,10 +1,46 @@
 import { Card, CardContent, CardMedia, Typography, Button, Grid, CardActions, Box,IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { useAuth } from "../../AuthContext";
+import JobApplicationForm from "./JobApplicationForm";
+import { useState } from "react";
 const JobCard = ({ job, onViewDetails,onEdit }) => {
   const { user } = useAuth();
+  const [showForm, setShowForm] = useState(false); // State to toggle form display
   // console.log(user.userType);
   return (
+    <>
+     {/* Render JobApplicationForm above all components when showForm is true */}
+     {showForm && (
+        <Box
+          sx={{
+            // position: "fixed",
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay effect
+            top: "10%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+            // width: "80%",
+            // maxWidth: "600px",
+            // backgroundColor: "white",
+            // boxShadow: 5,
+            // padding: 3,
+            // borderRadius: 2,
+            // zIndex: 1000, // Higher z-index to keep it above other elements
+            position: "fixed",
+        // top: 0,
+        // left: 0,
+        width: "90%",
+        height: "90%",
+        
+        // display: "flex",
+        // justifyContent: "center",
+        // alignItems: "center",
+        zIndex: 1000,
+        overflowY: "auto",
+          }}
+        >
+          <JobApplicationForm job={job} onClose={() => setShowForm(false)} />
+        </Box>
+      )}
   <Grid item xs={12} sm={6} md={4} lg={3} sx={{margin:2}}>
     <Card
       sx={{
@@ -79,8 +115,8 @@ const JobCard = ({ job, onViewDetails,onEdit }) => {
 
       {/* Buttons */}
       <CardActions sx={{ display: "flex", justifyContent: "space-between", padding: "10px 16px" }}>
-        <Button href={job.company.website} target="_blank" variant="contained" color="primary" size="small">
-          Visit Company
+        <Button  variant="contained" color="primary" size="small" onClick={() => setShowForm(true)}>
+          Apply
         </Button>
         <Button onClick={() => onViewDetails(job)} variant="outlined" color="secondary" size="small">
           Details
@@ -88,7 +124,7 @@ const JobCard = ({ job, onViewDetails,onEdit }) => {
       </CardActions>
     </Card>
   </Grid>
-
+      </>
   );
 };
 

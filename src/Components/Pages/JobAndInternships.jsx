@@ -1,42 +1,44 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import { Container, Typography, Grid, Box, CircularProgress } from "@mui/material";
+import { Container, Typography, Grid, Box, CircularProgress,Button } from "@mui/material";
 import JobCard from "./job-internship/JobCard";
 import JobDetails from "./job-internship/JobDetails";
 import EditableJobDetails from "./job-internship/EditableJobDetails";
+import AddJobForm from "./job-internship/AddJobForm";
+import { useAuth } from "../AuthContext";
 const JobAndInternships = () => {
-  
+  const [isAdding, setIsAdding] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [internships, setInternships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   const [EditSelectedJob,setEditSelectedJob]=useState(null);
   const [isEditing, setIsEditing] = useState(false); // Track editing state
-  
+  const {user}=useAuth();
+  // console.log(user);
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/jobs-internships/get-job-posts?older=true"
-        );
-        const allJobs = response.data.data;
-
-        // Separate jobs and internships
-        const jobList = allJobs.filter((job) => job.jobType === "Full-time");
-        const internshipList = allJobs.filter((job) => job.jobType === "Internship");
-
-        setJobs(jobList);
-        setInternships(internshipList);
-      } catch (error) {
-        console.error("Error fetching job posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchJobs();
   }, []);
+  const fetchJobs = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/jobs-internships/get-job-posts?older=true"
+      );
+      const allJobs = response.data.data;
+
+      // Separate jobs and internships
+      const jobList = allJobs.filter((job) => job.jobType === "Full-time");
+      const internshipList = allJobs.filter((job) => job.jobType === "Internship");
+
+      setJobs(jobList);
+      setInternships(internshipList);
+    } catch (error) {
+      console.error("Error fetching job posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleEditJob = (job) => {
     // console.log(job);
     setEditSelectedJob(job);
@@ -78,14 +80,22 @@ const handleSaveJob = (updatedJob) => {
     setIsEditing(false);
     setEditSelectedJob(null); // Close the edit form without saving
   };
+  const handleAddNewJob = () => {
+    setIsAdding(true);
+  };
   // console.log(isEditing)
   return (
-    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", py: 3,mt:{md:10,xs:5} }}>
+    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", py: 3,mt:{md:10,xs:7} }}>
       <Container>
-        <Typography variant="h5" align="center" gutterBottom fontWeight={600}>
-          Job & Internship Listings
-        </Typography>
-
+     { user?.userType==="admin" && (<Box sx={{ display: "flex", flexDirection:{xs:"column",md:"row"},alignItems: "center", mb: 3 ,justifyContent:"center",columnGap:3}}>
+          <Typography variant="h5" align="center" gutterBottom fontWeight={600}>
+            Job & Internship Listings
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleAddNewJob}>
+            Add New Job
+          </Button>
+        </Box>
+      )}
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
             <CircularProgress />
@@ -131,11 +141,12 @@ const handleSaveJob = (updatedJob) => {
     {/* Render either JobDetails or EditableJobDetails */}
     {isEditing && EditSelectedJob &&  (
       
-      <EditableJobDetails job={EditSelectedJob} onSave={handleSaveJob} onCancel={handleCancelEdit} />
+      <EditableJobDetails job={EditSelectedJob} onSave={handleSaveJob} onCancel={handleCancelEdit} refresh={fetchJobs}/>
     )}
     {!isEditing && selectedJob &&  (
       <JobDetails job={selectedJob} onClose={() => setSelectedJob(null)} />
     )}
+    {isAdding && <AddJobForm onCancel={() => setIsAdding(false)} refresh={fetchJobs}/>}
      
     </Box>
   );
